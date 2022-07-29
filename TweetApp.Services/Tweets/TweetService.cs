@@ -35,14 +35,14 @@
         public Tweet AddTweet(string username, Tweet tweet)
         {
             tweet.Id = DateTime.Now.ToString("yyyyMMddHHmmss");
-            tweet.Username = username;
-            tweet.Created = DateTime.Now;
+            tweet.TweetMessage.Username = username;
+            tweet.TweetMessage.Created = DateTime.Now;
             return _tweetRepo.AddTweet(tweet);
         }
 
         public Tweet UpdateTweet(string id, Tweet tweet)
         {
-            tweet.Created = DateTime.Now;
+            tweet.TweetMessage.Created = DateTime.Now;
             return _tweetRepo.UpdateTweet(id, tweet);
         }
 
@@ -51,8 +51,9 @@
             return _tweetRepo.LikeTweet(id);
         }
 
-        public Tweet ReplyTweet(string id, string message)
+        public Tweet ReplyTweet(string username, string id, TweetMessage message)
         {
+            message.Username = username;
             return _tweetRepo.ReplyTweet(id, message);
         }
 

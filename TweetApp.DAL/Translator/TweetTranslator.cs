@@ -12,14 +12,14 @@
                 return null;
             }
 
+            var replyDTOList = tweet.Reply?.ConvertAll(x => TweetMessageTranslator.TweetMessageToDTO(x)).ToList();
+
             var tweetDTO = new TweetDTO
             {
                 Id = tweet.Id,
-                Username = tweet.Username,
-                Message = tweet.Message,
-                Created = tweet.Created,
+                TweetMessage = TweetMessageTranslator.TweetMessageToDTO(tweet.TweetMessage),
                 Like = tweet.Like,
-                Reply = tweet.Reply
+                Reply = replyDTOList
             };
 
             return tweetDTO;
@@ -32,14 +32,14 @@
                 return null;
             }
 
+            var replyList = tweetDTO.Reply?.ConvertAll(x => TweetMessageTranslator.DtoToTweetMessage(x)).ToList();
+
             var tweet = new Tweet
             {
                 Id = tweetDTO.Id,
-                Username = tweetDTO.Username,
-                Message = tweetDTO.Message,
-                Created = tweetDTO.Created,
+                TweetMessage = TweetMessageTranslator.DtoToTweetMessage(tweetDTO.TweetMessage),
                 Like = tweetDTO.Like,
-                Reply = tweetDTO.Reply
+                Reply = replyList
             };
 
             return tweet;

@@ -89,10 +89,10 @@
         /// </summary>
         /// <returns></returns>
         [Route("{username}/reply/{id}")]
-        [HttpPut]
-        public ActionResult ReplyTweet(string id, [FromBody] string message)
+        [HttpPost]
+        public ActionResult ReplyTweet(string username, string id, [FromBody] TweetMessage message)
         {
-            var result = _tweetService.ReplyTweet(id, message);
+            var result = _tweetService.ReplyTweet(username, id, message);
             return Ok(result);
         }
 

@@ -10,14 +10,8 @@
         [BsonElement("Id")]
         public string Id { get; set; }
 
-        [BsonElement("username")]
-        public string Username { get; set; }
-
-        [BsonElement("message")]
-        public string Message { get; set; }
-
-        [BsonElement("created")]
-        public DateTime Created { get; set; }
+        [BsonElement("tweetMessage")]
+        public TweetMessageDTO TweetMessage { get; set; }
 
         [BsonIgnoreIfNull]
         [BsonElement("like")]
@@ -25,6 +19,8 @@
 
         [BsonIgnoreIfNull]
         [BsonElement("reply")]
-        public List<string>? Reply { set; get; }
+        public List<TweetMessageDTO>? Reply { set; get; }
+
+        
     }
 }

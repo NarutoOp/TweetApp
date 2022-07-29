@@ -25,7 +25,7 @@
 
         public List<Tweet> GetTweetByUsername(string username)
         {
-            var tweetDTOList = _tweetCollection.Find(x => x.Username == username).ToList();
+            var tweetDTOList = _tweetCollection.Find(x => x.TweetMessage.Username == username).ToList();
             var tweetList = tweetDTOList.ConvertAll(x => TweetTranslator.TweetDTOToTweet(x)).ToList();
             return tweetList;
         }
@@ -52,8 +52,8 @@
         public Tweet UpdateTweet(string id, Tweet tweet)
         {
             var tweetDTO = _tweetCollection.Find(x => x.Id == id).FirstOrDefault();
-            tweetDTO.Created = tweet.Created;
-            tweetDTO.Message = tweet.Message;
+            tweetDTO.TweetMessage.Created = tweet.TweetMessage.Created;
+            tweetDTO.TweetMessage.Message = tweet.TweetMessage.Message;
             _tweetCollection.ReplaceOne(x => x.Id == id, tweetDTO);
             return tweet;
         }
@@ -71,14 +71,15 @@
             return TweetTranslator.TweetDTOToTweet(tweetDTO);
         }
 
-        public Tweet ReplyTweet(string id, string message)
+        public Tweet ReplyTweet(string id, TweetMessage message)
         {
             var tweetDTO = _tweetCollection.Find(x => x.Id == id).FirstOrDefault();
             if(tweetDTO.Reply == null)
             {
-                tweetDTO.Reply = new List<string>();
+                tweetDTO.Reply = new List<TweetMessageDTO>();
             }
-            tweetDTO.Reply.Add(message);
+            var messageDTO = TweetMessageTranslator.TweetMessageToDTO(message);
+            tweetDTO.Reply.Add(messageDTO);
             _tweetCollection.ReplaceOne(x => x.Id == id, tweetDTO);
 
             return TweetTranslator.TweetDTOToTweet(tweetDTO);

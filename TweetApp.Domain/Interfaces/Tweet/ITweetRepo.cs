@@ -9,7 +9,7 @@
         Tweet AddTweet(Tweet tweet);
         Tweet UpdateTweet(string id, Tweet tweet);
         Tweet LikeTweet(string id);
-        Tweet ReplyTweet(string id, string message);
+        Tweet ReplyTweet(string id, TweetMessage message);
         void RemoveTweet(string id);
 
     }
