@@ -13,8 +13,8 @@
         /// Id property get or sets
         /// </summary>
         [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; } = string.Empty;
+        [BsonElement("Id")]
+        public string Id { get; set; }
 
         /// <summary>
         /// FirstName property get or sets

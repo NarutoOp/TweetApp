@@ -13,13 +13,13 @@
         /// <summary>
         /// IUserRepository instance
         /// </summary>
-        private readonly IUserRepository _userRepository;
+        private readonly IUserRepo _userRepository;
 
         /// <summary>
         /// UserService constructor
         /// </summary>
         /// <param name="userRepository">IUserRepository instance</param>
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepo userRepository)
         {
             _userRepository = userRepository;
         }
@@ -29,19 +29,20 @@
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public User Create(User user)
+        public User RegisterUser(User user)
         {
             Validations.EnsureValid(user, new UserRequestValidator(user));
+            user.Id = DateTime.Now.ToString("yyyyMMddHHmmss");
             string hash = PasswordHasher.Hash(user.Password);
             user.Password = hash;
-            _userRepository.Create(user);
+            _userRepository.AddUser(user);
             return user;
         }
 
         public bool Login(UserLogin userLogin)
         {
             Validations.EnsureValid(userLogin, new LoginValidator(userLogin));
-            var getUser = _userRepository.Get(userLogin.UserName, false);
+            var getUser = _userRepository.GetUser(userLogin.UserName);
             var (isVerified, needsUpgrade) = PasswordHasher.Check(getUser.Password, userLogin.Password);
 
             return isVerified;
@@ -51,11 +52,11 @@
         {
             Validations.EnsureValid(userLogin, new LoginValidator(userLogin));
 
-            var getUser = _userRepository.Get(userLogin.UserName, false);
+            var getUser = _userRepository.GetUser(userLogin.UserName);
             string hash = PasswordHasher.Hash(userLogin.Password);
             getUser.Password = hash;
 
-            return _userRepository.Update(getUser);
+            return _userRepository.UpdateUser(getUser);
         }
     }
 }

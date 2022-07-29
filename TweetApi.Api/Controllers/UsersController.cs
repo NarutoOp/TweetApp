@@ -45,7 +45,7 @@
         [HttpPost]
         public ActionResult Register([FromBody] User user)
         {
-            var result = _registerUserService.Create(user);
+            var result = _registerUserService.RegisterUser(user);
             return Ok(result);
         }
         

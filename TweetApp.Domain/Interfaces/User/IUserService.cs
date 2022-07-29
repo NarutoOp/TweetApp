@@ -11,7 +11,7 @@
         /// Add user into the database
         /// </summary>
         /// <returns></returns>
-        User Create(User user);
+        User RegisterUser(User user);
 
         /// <summary>
         /// Add user into the database
