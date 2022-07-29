@@ -33,7 +33,7 @@
         [HttpGet]
         public ActionResult Register()
         {
-            throw new InternalBufferOverflowException();
+            throw new NotImplementedException();
         }
 
         /// <summary>
