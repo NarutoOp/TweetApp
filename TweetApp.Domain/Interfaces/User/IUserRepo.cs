@@ -21,6 +21,13 @@
         User GetUser(string id);
 
         /// <summary>
+        /// GetUser by Username from database
+        /// </summary>
+        /// <param name="username">username partial or full</param>
+        /// <returns>User list</returns>
+        List<User> GetUserByUsername(string username);
+
+        /// <summary>
         /// Add user into the database
         /// </summary>
         /// <returns></returns>

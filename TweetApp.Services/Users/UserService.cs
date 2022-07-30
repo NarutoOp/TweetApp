@@ -1,5 +1,6 @@
 ﻿namespace TweetApp.Services.Users
 {
+    using TweetApp.Domain.Exceptions;
     using TweetApp.Domain.Interfaces.User;
     using TweetApp.Domain.Models.Users;
     using TweetApp.Domain.Validators;
@@ -22,6 +23,28 @@
         public UserService(IUserRepo userRepository)
         {
             _userRepository = userRepository;
+        }
+
+        /// <summary>
+        /// GetAllUsers method
+        /// </summary>
+        /// <returns>List of users</returns>
+        public List<User> GetAllUsers()
+        {
+            return _userRepository.GetAllUser();
+        }
+
+        /// <summary>
+        /// GetUserByUsername method
+        /// </summary>
+        /// <returns>List of users</returns>
+        public List<User> GetUserByUsername(string username)
+        {
+            if (string.IsNullOrEmpty(username))
+            {
+                throw new DomainException("Username cannot be empty", System.Net.HttpStatusCode.BadRequest);
+            }
+            return _userRepository.GetUserByUsername(username);
         }
 
         /// <summary>

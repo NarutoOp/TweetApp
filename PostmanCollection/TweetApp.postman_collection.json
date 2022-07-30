@@ -1,0 +1,341 @@
+{
+	"info": {
+		"_postman_id": "e11585d1-79c4-4de2-9a46-b7e816ece416",
+		"name": "TweetApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22325344"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"test\",\r\n  \"password\": \"pass\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44374/api/v1.0/tweets/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44374",
+					"path": [
+						"api",
+						"v1.0",
+						"tweets",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegisterUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"test\",\r\n  \"lastName\": \"test\",\r\n  \"email\": \"test1@test.com\",\r\n  \"loginId\": \"test\",\r\n  \"password\": \"test\",\r\n  \"confirmPassword\": \"test\",\r\n  \"contactNumber\": \"1111111111\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44333/api/v1.0/tweets/register",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44333",
+					"path": [
+						"api",
+						"v1.0",
+						"tweets",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "forgotPassword",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\"pass\"",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44374/api/v1.0/tweets/test/forgot",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44374",
+					"path": [
+						"api",
+						"v1.0",
+						"tweets",
+						"test",
+						"forgot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllTweetsOfUser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44333/api/v1.0/tweets/test",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44333",
+					"path": [
+						"api",
+						"v1.0",
+						"tweets",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllTweets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44333/api/v1.0/tweets/all",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44333",
+					"path": [
+						"api",
+						"v1.0",
+						"tweets",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddTweet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"tweetMessage\": {\r\n        \"message\": \"My First Tweet - test\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44333/api/v1.0/tweets/test/add",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44333",
+					"path": [
+						"api",
+						"v1.0",
+						"tweets",
+						"test",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateTweet",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"tweetMessage\": {\r\n        \"message\": \"My First Tweet Modified - test\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44333/api/v1.0/tweets/test/update/20220730014625",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44333",
+					"path": [
+						"api",
+						"v1.0",
+						"tweets",
+						"test",
+						"update",
+						"20220730014625"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteTweet",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44333/api/v1.0/tweets/test/delete/20220730005225",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44333",
+					"path": [
+						"api",
+						"v1.0",
+						"tweets",
+						"test",
+						"delete",
+						"20220730005225"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LikeTweet",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44333/api/v1.0/tweets/test/like/20220730014625",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44333",
+					"path": [
+						"api",
+						"v1.0",
+						"tweets",
+						"test",
+						"like",
+						"20220730014625"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReplyTweet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"message\": \"First Reply\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44333/api/v1.0/tweets/test/Reply/20220730014625",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44333",
+					"path": [
+						"api",
+						"v1.0",
+						"tweets",
+						"test",
+						"Reply",
+						"20220730014625"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllUser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44333/api/v1.0/tweets/users/all",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44333",
+					"path": [
+						"api",
+						"v1.0",
+						"tweets",
+						"users",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchUsers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44333/api/v1.0/tweets/user/search/test",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44333",
+					"path": [
+						"api",
+						"v1.0",
+						"tweets",
+						"user",
+						"search",
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -44,13 +44,24 @@
         /// GetUser by Id from database
         /// </summary>
         /// <param name="id">id</param>
-        /// <param name="isEmailId">To check whether id passed is email or username</param>
         /// <returns>User instance</returns>
         public User GetUser(string id)
         {
             var userDTO = _userCollection.Find(user => user.LoginId == id).FirstOrDefault();
 
             return UserTranslator.UserDtoToUser(userDTO);
+        }
+
+        /// <summary>
+        /// GetUser by Id from database
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns>User instance</returns>
+        public List<User> GetUserByUsername(string username)
+        {
+            var userDtoList = _userCollection.Find(user => user.LoginId.Contains(username)).ToList();
+            var listOfUser = userDtoList.ConvertAll(x => UserTranslator.UserDtoToUser(x)).ToList();
+            return listOfUser;
         }
 
         /// <summary>
