@@ -3,6 +3,7 @@
     using MongoDB.Driver;
     using TweetApp.DAL.Models.Tweet;
     using TweetApp.DAL.Translator;
+    using TweetApp.Domain.Exceptions;
     using TweetApp.Domain.Interfaces.Tweet;
     using TweetApp.Domain.Models.Tweet;
 
@@ -52,6 +53,11 @@
         public Tweet UpdateTweet(string id, Tweet tweet)
         {
             var tweetDTO = _tweetCollection.Find(x => x.Id == id).FirstOrDefault();
+            if(tweetDTO == null)
+            {
+                throw new DomainException("Id is invalid", System.Net.HttpStatusCode.BadRequest);
+            }
+
             tweetDTO.TweetMessage.Created = tweet.TweetMessage.Created;
             tweetDTO.TweetMessage.Message = tweet.TweetMessage.Message;
             _tweetCollection.ReplaceOne(x => x.Id == id, tweetDTO);
@@ -61,10 +67,15 @@
         public Tweet LikeTweet(string id)
         {
             var tweetDTO = _tweetCollection.Find(x => x.Id == id).FirstOrDefault();
+            if(tweetDTO == null)
+            {
+                throw new DomainException("Id is invalid", System.Net.HttpStatusCode.BadRequest);
+            }
             if (tweetDTO.Like == null)
             {
                 tweetDTO.Like = 0;
             }
+
             tweetDTO.Like++;
             _tweetCollection.ReplaceOne(x => x.Id == id, tweetDTO);
 
@@ -74,6 +85,11 @@
         public Tweet ReplyTweet(string id, TweetMessage message)
         {
             var tweetDTO = _tweetCollection.Find(x => x.Id == id).FirstOrDefault();
+            if(tweetDTO == null)
+            {
+                throw new DomainException("Id is invalid",System.Net.HttpStatusCode.BadRequest);
+            }
+
             if(tweetDTO.Reply == null)
             {
                 tweetDTO.Reply = new List<TweetMessageDTO>();
