@@ -18,9 +18,14 @@
         protected string _databaseName;
 
         /// <summary>
-        ///  Collection
+        ///  User Collection Name
         /// </summary>
-        protected string _collectionName;
+        protected string _userCollectionName;
+
+        /// <summary>
+        ///  Tweet Collection Name
+        /// </summary>
+        protected string _tweetCollectionName;
 
         /// <summary>
         /// Configuration contructor
@@ -34,7 +39,8 @@
 
             _connectionString = appsettings.GetSection("DatabaseSettings")["ConnectionString"];
             _databaseName = appsettings.GetSection("DatabaseSettings")["DatabaseName"];
-            _collectionName = appsettings.GetSection("DatabaseSettings")["CollectionName"];
+            _userCollectionName = appsettings.GetSection("DatabaseSettings")["UserCollectionName"];
+            _tweetCollectionName = appsettings.GetSection("DatabaseSettings")["TweetCollectionName"];
         }
 
     }

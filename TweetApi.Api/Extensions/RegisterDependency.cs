@@ -2,7 +2,9 @@
 {
     using TweetApi.Api.Middlewares;
     using TweetApp.DAL.Repository;
+    using TweetApp.Domain.Interfaces.Tweet;
     using TweetApp.Domain.Interfaces.User;
+    using TweetApp.Services.Tweets;
     using TweetApp.Services.Users;
 
     /// <summary>
@@ -18,7 +20,9 @@
         public static IServiceCollection AddMyDependencyGroup(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepo, UserRepo>();
+            services.AddScoped<ITweetRepo, TweetRepo>();
+            services.AddScoped<ITweetService, TweetService>();
             services.AddTransient<ExceptionHandlerMiddleware>();
 
             return services;

@@ -8,10 +8,22 @@
     public interface IUserService
     {
         /// <summary>
+        /// GetAllUsers method
+        /// </summary>
+        /// <returns>List of users</returns>
+        List<User> GetAllUsers();
+
+        /// <summary>
+        /// GetUserByUsername method
+        /// </summary>
+        /// <returns>List of users</returns>
+        List<User> GetUserByUsername(string username);
+
+        /// <summary>
         /// Add user into the database
         /// </summary>
         /// <returns></returns>
-        User Create(User user);
+        User RegisterUser(User user);
 
         /// <summary>
         /// Add user into the database

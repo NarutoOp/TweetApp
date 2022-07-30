@@ -25,15 +25,29 @@
         }
 
         /// <summary>
-        /// User Registeration controller
+        /// GetAllUser controller
         /// </summary>
-        /// <param name="user">User instance</param>
+        /// <param name="user">Users List</param>
         /// <returns></returns>
-        [Route("register")]
+        [Route("users/all")]
         [HttpGet]
-        public ActionResult Register()
+        public ActionResult GetAllUser()
         {
-            throw new InternalBufferOverflowException();
+            var result = _registerUserService.GetAllUsers();
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// GetAllUser controller
+        /// </summary>
+        /// <param name="user">Users List</param>
+        /// <returns></returns>
+        [Route("user/search/{username}")]
+        [HttpGet]
+        public ActionResult SearchUser(string username)
+        {
+            var result = _registerUserService.GetUserByUsername(username);
+            return Ok(result);
         }
 
         /// <summary>
@@ -45,7 +59,7 @@
         [HttpPost]
         public ActionResult Register([FromBody] User user)
         {
-            var result = _registerUserService.Create(user);
+            var result = _registerUserService.RegisterUser(user);
             return Ok(result);
         }
         
