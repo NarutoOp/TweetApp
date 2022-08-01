@@ -10,7 +10,7 @@
         Tweet UpdateTweet(string id, Tweet tweet);
         Tweet LikeTweet(string id);
         Tweet ReplyTweet(string id, TweetMessage message);
-        void RemoveTweet(string id);
+        long RemoveTweet(string id);
 
     }
 }

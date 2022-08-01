@@ -1,6 +1,7 @@
 ﻿namespace TweetApp.Api.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using TweetApp.Domain.Exceptions;
     using TweetApp.Domain.Interfaces.User;
     using TweetApp.Domain.Models.Users;
 
@@ -14,14 +15,14 @@
         /// <summary>
         /// IUserService instance
         /// </summary>
-        private readonly IUserService _registerUserService;
+        private readonly IUserService _userService;
 
         /// <summary>
         /// UsersController constructor
         /// </summary>
-        public UsersController(IUserService registerUserService)
+        public UsersController(IUserService userService)
         {
-            _registerUserService = registerUserService;
+            _userService = userService;
         }
 
         /// <summary>
@@ -33,7 +34,7 @@
         [HttpGet]
         public ActionResult GetAllUser()
         {
-            var result = _registerUserService.GetAllUsers();
+            var result = _userService.GetAllUsers();
             return Ok(result);
         }
 
@@ -46,7 +47,7 @@
         [HttpGet]
         public ActionResult SearchUser(string username)
         {
-            var result = _registerUserService.GetUserByUsername(username);
+            var result = _userService.GetUserByUsername(username);
             return Ok(result);
         }
 
@@ -59,7 +60,11 @@
         [HttpPost]
         public ActionResult Register([FromBody] User user)
         {
-            var result = _registerUserService.RegisterUser(user);
+            if(user == null)
+            {
+                throw new DomainException("Invalid Request", System.Net.HttpStatusCode.BadRequest);
+            }
+            var result = _userService.RegisterUser(user);
             return Ok(result);
         }
         
@@ -70,9 +75,13 @@
         /// <returns></returns>
         [Route("login")]
         [HttpPost]
-        public ActionResult Login([FromBody] UserLogin userDetails)
+        public ActionResult Login([FromBody] UserLogin userLogin)
         {
-            return _registerUserService.Login(userDetails) ? Ok("Verified") : Ok("failed");
+            if (userLogin == null)
+            {
+                throw new DomainException("Invalid Request", System.Net.HttpStatusCode.BadRequest);
+            }
+            return Ok(_userService.Login(userLogin));
         }
 
         /// <summary>
@@ -83,14 +92,14 @@
         /// <returns></returns>
         [Route("{userName}/forgot")]
         [HttpPut]
-        public ActionResult<User> Forgot([FromRoute] string userName,[FromBody] string password)
+        public ActionResult Forgot([FromRoute] string userName,[FromBody] string password)
         {
             UserLogin userLogin = new UserLogin
             {
                 UserName =  userName,
                 Password = password
             };
-            return _registerUserService.UpdatePassword(userLogin);
+            return Ok(_userService.UpdatePassword(userLogin));
         }
     }
 }

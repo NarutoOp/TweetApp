@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetApp.Domain", "TweetApp.Domain\TweetApp.Domain.csproj", "{EF581A5C-1688-4441-B549-81F820D06136}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TweetApp.Domain", "TweetApp.Domain\TweetApp.Domain.csproj", "{EF581A5C-1688-4441-B549-81F820D06136}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetApp.DAL", "TweetApp.DAL\TweetApp.DAL.csproj", "{9FF10941-F365-4E67-959C-7A6AB080BD7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TweetApp.DAL", "TweetApp.DAL\TweetApp.DAL.csproj", "{9FF10941-F365-4E67-959C-7A6AB080BD7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetApp.Services", "TweetApp.Services\TweetApp.Services.csproj", "{2D3BB8AA-F1C8-4F1D-B4E1-C184205048D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TweetApp.Services", "TweetApp.Services\TweetApp.Services.csproj", "{2D3BB8AA-F1C8-4F1D-B4E1-C184205048D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetApi.Api", "TweetApi.Api\TweetApi.Api.csproj", "{261F88BA-4BA2-40BE-B78D-797491A3525C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TweetApi.Api", "TweetApi.Api\TweetApi.Api.csproj", "{261F88BA-4BA2-40BE-B78D-797491A3525C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetApi.Tests", "TweetApi.Test\TweetApi.Tests.csproj", "{5D30B445-758C-4698-B2AE-5A2B5F51DDBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{261F88BA-4BA2-40BE-B78D-797491A3525C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{261F88BA-4BA2-40BE-B78D-797491A3525C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{261F88BA-4BA2-40BE-B78D-797491A3525C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D30B445-758C-4698-B2AE-5A2B5F51DDBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D30B445-758C-4698-B2AE-5A2B5F51DDBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D30B445-758C-4698-B2AE-5A2B5F51DDBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D30B445-758C-4698-B2AE-5A2B5F51DDBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
