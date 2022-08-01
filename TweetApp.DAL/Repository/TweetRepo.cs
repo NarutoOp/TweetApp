@@ -101,9 +101,9 @@
             return TweetTranslator.TweetDTOToTweet(tweetDTO);
         }
 
-        public void RemoveTweet(string id)
+        public long RemoveTweet(string id)
         {
-            _tweetCollection.DeleteOne(x => x.Id == id);
+            return _tweetCollection.DeleteOne(x => x.Id == id).DeletedCount;
         }
     }
 }

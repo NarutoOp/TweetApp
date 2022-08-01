@@ -58,14 +58,17 @@
             user.Id = DateTime.Now.ToString("yyyyMMddHHmmss");
             string hash = PasswordHasher.Hash(user.Password);
             user.Password = hash;
-            _userRepository.AddUser(user);
-            return user;
+            return _userRepository.AddUser(user);
         }
 
         public bool Login(UserLogin userLogin)
         {
             Validations.EnsureValid(userLogin, new LoginValidator(userLogin));
-            var getUser = _userRepository.GetUser(userLogin.UserName);
+            var getUser = _userRepository.GetUserByUsername(userLogin.UserName)?.FirstOrDefault();
+            if (getUser == null)
+            {
+                throw new DomainException("No user found", System.Net.HttpStatusCode.BadRequest);
+            }
             var (isVerified, needsUpgrade) = PasswordHasher.Check(getUser.Password, userLogin.Password);
 
             return isVerified;
@@ -74,8 +77,11 @@
         public User UpdatePassword(UserLogin userLogin)
         {
             Validations.EnsureValid(userLogin, new LoginValidator(userLogin));
-
-            var getUser = _userRepository.GetUser(userLogin.UserName);
+            var getUser = _userRepository.GetUserByUsername(userLogin.UserName)?.FirstOrDefault();
+            if (getUser == null)
+            {
+                throw new DomainException("No user found", System.Net.HttpStatusCode.BadRequest);
+            }
             string hash = PasswordHasher.Hash(userLogin.Password);
             getUser.Password = hash;
 

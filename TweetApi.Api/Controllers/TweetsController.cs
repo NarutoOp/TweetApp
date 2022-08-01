@@ -1,6 +1,7 @@
 ﻿namespace TweetApi.Api.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using TweetApp.Domain.Exceptions;
     using TweetApp.Domain.Interfaces.Tweet;
     using TweetApp.Domain.Models.Tweet;
 
@@ -56,6 +57,10 @@
         [HttpPost]
         public ActionResult AddTweet(string username, [FromBody] Tweet tweet)
         {
+            if (tweet == null)
+            {
+                throw new DomainException("Invalid Request", System.Net.HttpStatusCode.BadRequest);
+            }
             var result = _tweetService.AddTweet(username, tweet);
             return Ok(result);
         }
@@ -68,6 +73,10 @@
         [HttpPut]
         public ActionResult UpdateTweet(string username, string id, [FromBody] Tweet tweet)
         {
+            if (tweet == null)
+            {
+                throw new DomainException("Invalid Request", System.Net.HttpStatusCode.BadRequest);
+            }
             var result = _tweetService.UpdateTweet(id, tweet);
             return Ok(result);
         }
@@ -92,6 +101,10 @@
         [HttpPost]
         public ActionResult ReplyTweet(string username, string id, [FromBody] TweetMessage message)
         {
+            if (message == null)
+            {
+                throw new DomainException("Invalid Request", System.Net.HttpStatusCode.BadRequest);
+            }
             var result = _tweetService.ReplyTweet(username, id, message);
             return Ok(result);
         }
@@ -104,8 +117,7 @@
         [HttpDelete]
         public ActionResult DeleteTweet(string id)
         {
-            _tweetService.DeleteTweet(id);
-            return Ok("Deleted");
+            return Ok(_tweetService.DeleteTweet(id));
         }
     }
 }

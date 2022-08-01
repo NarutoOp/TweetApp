@@ -65,10 +65,10 @@
             return _tweetRepo.ReplyTweet(id, message);
         }
 
-        public void DeleteTweet(string id)
+        public long DeleteTweet(string id)
         {
             FieldValidator.IsValidId(id);
-            _tweetRepo.RemoveTweet(id);
+            return _tweetRepo.RemoveTweet(id);
         }
     }
 }

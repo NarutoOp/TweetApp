@@ -13,6 +13,6 @@
         Tweet UpdateTweet(string id, Tweet tweet);
         Tweet LikeTweet(string id);
         Tweet ReplyTweet(string username, string id, TweetMessage message);
-        void DeleteTweet(string id);
+        long DeleteTweet(string id);
     }
 }

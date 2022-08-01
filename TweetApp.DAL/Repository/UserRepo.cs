@@ -37,19 +37,6 @@
             var listOfUserDTO = _userCollection.Find(user => true).ToList();
             var listOfUser = listOfUserDTO.ConvertAll(x => UserTranslator.UserDtoToUser(x)).ToList();
             return listOfUser;
-
-        }
-
-        /// <summary>
-        /// GetUser by Id from database
-        /// </summary>
-        /// <param name="id">id</param>
-        /// <returns>User instance</returns>
-        public User GetUser(string id)
-        {
-            var userDTO = _userCollection.Find(user => user.LoginId == id).FirstOrDefault();
-
-            return UserTranslator.UserDtoToUser(userDTO);
         }
 
         /// <summary>
