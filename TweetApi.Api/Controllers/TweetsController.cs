@@ -12,6 +12,7 @@
     [ApiController]
     public class TweetsController : ControllerBase
     {
+        private readonly ILogger<TweetsController> _logger;
         /// <summary>
         /// ITweetService instance
         /// </summary>
@@ -20,9 +21,10 @@
         /// <summary>
         /// TweetsController constructor
         /// </summary>
-        public TweetsController(ITweetService tweetService)
+        public TweetsController(ITweetService tweetService, ILogger<TweetsController> logger)
         {
             _tweetService = tweetService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -33,6 +35,7 @@
         [HttpGet]
         public ActionResult GetUserTweets(string username)
         {
+            _logger.LogInformation("WeatherForecastController Get - this is a nice message to test the logs", DateTime.UtcNow);
             var result = _tweetService.GetUserTweets(username);
             return Ok(result);
         }
