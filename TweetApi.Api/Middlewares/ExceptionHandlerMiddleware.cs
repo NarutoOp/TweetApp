@@ -12,8 +12,8 @@
     {
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            ErrorInfo info = null;
-
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
             try
             {
                 await next(context);
@@ -21,19 +21,17 @@
             catch (DomainException e)
             {
                 context.Response.StatusCode = (int)e.HttpStatusCode;
-                info = new ErrorInfo(e.Message, e.Errors);
+                var info = new ErrorInfo(e.Message, e.Errors);
+                context.Response.ContentType = "application/json";
+                var json = JsonConvert.SerializeObject(info, settings);
+                await context.Response.WriteAsync(json);
             }
             catch (Exception e)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                info = new ErrorInfo(e.Message);
-            }
-            finally
-            {
-                JsonSerializerSettings settings = new JsonSerializerSettings();
-                settings.NullValueHandling = NullValueHandling.Ignore;
+                var info = new ErrorInfo(e.Message);
                 context.Response.ContentType = "application/json";
-                var json = JsonConvert.SerializeObject(info,settings);
+                var json = JsonConvert.SerializeObject(info, settings);
                 await context.Response.WriteAsync(json);
             };
         }

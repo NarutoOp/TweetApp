@@ -35,8 +35,8 @@
         [HttpGet]
         public ActionResult GetUserTweets(string username)
         {
-            _logger.LogInformation("WeatherForecastController Get - this is a nice message to test the logs", DateTime.UtcNow);
             var result = _tweetService.GetUserTweets(username);
+            _logger.LogInformation("GetUserTweets", result);
             return Ok(result);
         }
 
@@ -49,6 +49,7 @@
         public ActionResult GetAllTweets()
         {
             var result = _tweetService.GetAllTweets();
+            _logger.LogInformation("GetAllTweets", result);
             return Ok(result);
         }
 
@@ -65,6 +66,7 @@
                 throw new DomainException("Invalid Request", System.Net.HttpStatusCode.BadRequest);
             }
             var result = _tweetService.AddTweet(username, tweet);
+            _logger.LogInformation("AddTweet", result);
             return Ok(result);
         }
 
@@ -81,6 +83,7 @@
                 throw new DomainException("Invalid Request", System.Net.HttpStatusCode.BadRequest);
             }
             var result = _tweetService.UpdateTweet(id, tweet);
+            _logger.LogInformation("UpdateTweet", result);
             return Ok(result);
         }
 
@@ -93,6 +96,7 @@
         public ActionResult LikeTweet(string id)
         {
             var result = _tweetService.LikeTweet(id);
+            _logger.LogInformation("LikeTweet", result);
             return Ok(result);
         }
 
@@ -109,6 +113,7 @@
                 throw new DomainException("Invalid Request", System.Net.HttpStatusCode.BadRequest);
             }
             var result = _tweetService.ReplyTweet(username, id, message);
+            _logger.LogInformation("ReplyTweet", result);
             return Ok(result);
         }
 
@@ -120,6 +125,7 @@
         [HttpDelete]
         public ActionResult DeleteTweet(string id)
         {
+            _logger.LogInformation("DeletedTweet");
             return Ok(_tweetService.DeleteTweet(id));
         }
     }

@@ -21,8 +21,6 @@ services:
     image: docker.elastic.co/kibana/kibana:7.16.1
     ports:
       - 5601:5601
-    depends_on:
-      - els
     environment:
       - ELASTICSEARCH_URL=http://localhost:9200
     networks:
