@@ -16,7 +16,7 @@
         /// </summary>
         /// <param name="password">password which needs o be hashed</param>
         /// <returns>hash string</returns>
-        public static string Hash(string password)
+        public static string ConvertToHash(string password)
         {
             using (var algorithm = new Rfc2898DeriveBytes(
               password,
@@ -38,7 +38,7 @@
         /// <param name="password">password to check</param>
         /// <returns>verified</returns>
         /// <exception cref="FormatException"></exception>
-        public static (bool Verified, bool NeedsUpgrade) Check(string hash, string password)
+        public static (bool Verified, bool NeedsUpgrade) CheckPassword(string hash, string password)
         {
             var parts = hash.Split('.', 3);
 
