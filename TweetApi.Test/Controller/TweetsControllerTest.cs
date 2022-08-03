@@ -2,6 +2,7 @@
 {
     using AutoFixture;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
     using Moq;
     using NUnit.Framework;
     using System.Net;
@@ -15,13 +16,15 @@
         private Mock<ITweetService> _mockTweetService;
         private IFixture _fixture;
         private TweetsController _tweetController;
+        private Mock<ILogger<TweetsController>> _mockLogger;
 
         [SetUp]
         public void Setup()
         {
             _fixture = new Fixture();
             _mockTweetService = new Mock<ITweetService>();
-            _tweetController = new TweetsController(_mockTweetService.Object);
+            _mockLogger = new Mock<ILogger<TweetsController>>();
+            _tweetController = new TweetsController(_mockTweetService.Object, _mockLogger.Object);
         }
 
         [Test]
