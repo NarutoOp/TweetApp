@@ -1,5 +1,6 @@
 ﻿namespace TweetApp.Services.Tweets
 {
+    using System.Text.RegularExpressions;
     using TweetApp.Domain;
     using TweetApp.Domain.Interfaces.Tweet;
     using TweetApp.Domain.Models.Tweet;
@@ -40,6 +41,7 @@
             tweet.Id = DateTime.Now.ToString("yyyyMMddHHmmss");
             tweet.TweetMessage.Username = username;
             tweet.TweetMessage.Created = DateTime.Now;
+            tweet.TweetMessage.Tag = FetchTags(tweet.TweetMessage.Message);
             return _tweetRepo.AddTweet(tweet);
         }
 
@@ -48,6 +50,7 @@
             FieldValidator.IsValidId(id);
             Validations.EnsureValid(tweet, new TweetValidator(tweet));
             tweet.TweetMessage.Created = DateTime.Now;
+            tweet.TweetMessage.Tag = FetchTags(tweet.TweetMessage.Message);
             return _tweetRepo.UpdateTweet(id, tweet);
         }
 
@@ -62,6 +65,7 @@
             FieldValidator.IsValidId(id);
             Validations.EnsureValid(message, new TweetMessageValidator(message));
             message.Username = username;
+            message.Tag = FetchTags(message.Message);
             return _tweetRepo.ReplyTweet(id, message);
         }
 
@@ -69,6 +73,18 @@
         {
             FieldValidator.IsValidId(id);
             return _tweetRepo.RemoveTweet(id);
+        }
+
+        private List<string> FetchTags(string s)
+        {
+            List<string> tags = new List<string>();
+            foreach(string l in s.Split(" ")){
+                if(l.StartsWith('#') & !tags.Exists(x => x == l) & l.Length <= 50)
+                {
+                    tags.Add(l);
+                }
+            }
+            return tags;
         }
     }
 }

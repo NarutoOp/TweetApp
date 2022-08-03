@@ -57,11 +57,12 @@
             {
                 throw new DomainException("Id is invalid", System.Net.HttpStatusCode.BadRequest);
             }
-
             tweetDTO.TweetMessage.Created = tweet.TweetMessage.Created;
             tweetDTO.TweetMessage.Message = tweet.TweetMessage.Message;
+            tweetDTO.TweetMessage.Tag = tweet.TweetMessage.Tag;
             _tweetCollection.ReplaceOne(x => x.Id == id, tweetDTO);
-            return tweet;
+            var result = TweetTranslator.TweetDTOToTweet(tweetDTO);
+            return result;
         }
 
         public Tweet LikeTweet(string id)
