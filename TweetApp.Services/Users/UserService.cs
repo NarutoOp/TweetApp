@@ -1,5 +1,6 @@
 ﻿namespace TweetApp.Services.Users
 {
+    using Microsoft.Extensions.Configuration;
     using TweetApp.Domain.Exceptions;
     using TweetApp.Domain.Interfaces.User;
     using TweetApp.Domain.Models.Users;
@@ -17,12 +18,18 @@
         private readonly IUserRepo _userRepository;
 
         /// <summary>
+        /// IConfiguration instance
+        /// </summary>
+        private readonly IConfiguration _configuration;
+
+        /// <summary>
         /// UserService constructor
         /// </summary>
         /// <param name="userRepository">IUserRepository instance</param>
-        public UserService(IUserRepo userRepository)
+        public UserService(IUserRepo userRepository, IConfiguration configuration)
         {
             _userRepository = userRepository;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -56,22 +63,28 @@
         {
             Validations.EnsureValid(user, new UserRequestValidator(user));
             user.Id = DateTime.Now.ToString("yyyyMMddHHmmss");
-            string hash = PasswordHasher.Hash(user.Password);
+            string hash = PasswordHasher.ConvertToHash(user.Password);
             user.Password = hash;
             return _userRepository.AddUser(user);
         }
 
-        public bool Login(UserLogin userLogin)
+        public string Login(UserLogin userLogin)
         {
             Validations.EnsureValid(userLogin, new LoginValidator(userLogin));
             var getUser = _userRepository.GetUserByUsername(userLogin.UserName)?.FirstOrDefault();
             if (getUser == null)
             {
-                throw new DomainException("No user found", System.Net.HttpStatusCode.BadRequest);
+                throw new DomainException("User not found", System.Net.HttpStatusCode.BadRequest);
             }
-            var (isVerified, needsUpgrade) = PasswordHasher.Check(getUser.Password, userLogin.Password);
+            var (isVerified, needsUpgrade) = PasswordHasher.CheckPassword(getUser.Password, userLogin.Password);
 
-            return isVerified;
+            if (!isVerified)
+            {
+                throw new DomainException("Wrong Password", System.Net.HttpStatusCode.BadRequest);
+            }
+            var token = WebToken.GenerateJSONWebToken(userLogin, _configuration.GetSection("Jwt:Key").Value);
+
+            return token;
         }
 
         public User UpdatePassword(UserLogin userLogin)
@@ -80,9 +93,9 @@
             var getUser = _userRepository.GetUserByUsername(userLogin.UserName)?.FirstOrDefault();
             if (getUser == null)
             {
-                throw new DomainException("No user found", System.Net.HttpStatusCode.BadRequest);
+                throw new DomainException("User not found", System.Net.HttpStatusCode.BadRequest);
             }
-            string hash = PasswordHasher.Hash(userLogin.Password);
+            string hash = PasswordHasher.ConvertToHash(userLogin.Password);
             getUser.Password = hash;
 
             return _userRepository.UpdateUser(getUser);

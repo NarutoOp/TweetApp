@@ -1,6 +1,7 @@
 ﻿namespace TweetApi.Tests.Services
 {
     using AutoFixture;
+    using Microsoft.Extensions.Configuration;
     using Moq;
     using NUnit.Framework;
     using System.Net;
@@ -12,6 +13,7 @@
     public class UserServiceTest
     {
         private Mock<IUserRepo> _mockUserRepo;
+        private Mock<IConfiguration> _mockConfiguration;
         private IFixture _fixture;
         private IUserService _userService;
 
@@ -20,7 +22,8 @@
         {
             _fixture = new Fixture();
             _mockUserRepo = new Mock<IUserRepo>();
-            _userService = new UserService(_mockUserRepo.Object);
+            _mockConfiguration = new Mock<IConfiguration>();
+            _userService = new UserService(_mockUserRepo.Object, _mockConfiguration.Object);
         }
 
         [Test]
@@ -109,19 +112,20 @@
                 Email = "test@test.com",
                 LoginId = "testuser",
                 ContactNumber = "1122334455",
-                Password = "10000.4IU4k7hLvMdN7SpmEU32Vw==.yfuawL2+X8cDo3SggsQYvUeIMMTVaHmrD4qMbcuy6rY="
+                Password = "10000.UWyiXwt5ArAi3WqHpm7aOQ==.we1lbEPbbntYnLkNNswdvX9DhrNNPR+1DhSviJdrGTM="
             };
 
             var userLogin = new UserLogin
             {
                 UserName = "testuser",
-                Password = "testpass",
+                Password = "test12",
             };
 
             _mockUserRepo.Setup(x => x.GetUserByUsername(It.IsAny<string>())).Returns(new List<User> { user });
+            _mockConfiguration.Setup(x => x.GetSection(It.IsAny<string>()).Value).Returns("testkey for test");
             var ActualResult = _userService.Login(userLogin) ;
             Assert.IsNotNull(ActualResult);
-            Assert.AreEqual(false, ActualResult);
+            Assert.IsInstanceOf<string>(ActualResult);
         }
 
         [Test]
@@ -134,7 +138,7 @@
             };
             var exception = Assert.Throws<DomainException>(() => _userService.Login(userLogin));
             Assert.AreEqual(exception.HttpStatusCode, HttpStatusCode.BadRequest);
-            Assert.AreEqual(exception.Message, "No user found");
+            Assert.AreEqual(exception.Message, "User not found");
         }
 
         [Test]
@@ -174,7 +178,7 @@
             };
             var exception = Assert.Throws<DomainException>(() => _userService.UpdatePassword(userLogin));
             Assert.AreEqual(exception.HttpStatusCode, HttpStatusCode.BadRequest);
-            Assert.AreEqual(exception.Message, "No user found");
+            Assert.AreEqual(exception.Message, "User not found");
         }
     }
 

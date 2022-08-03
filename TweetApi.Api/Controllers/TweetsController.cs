@@ -1,5 +1,6 @@
 ﻿namespace TweetApi.Api.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using TweetApp.Domain.Exceptions;
     using TweetApp.Domain.Interfaces.Tweet;
@@ -10,6 +11,7 @@
     /// </summary>
     [Route("api/v1.0/tweets")]
     [ApiController]
+    [Authorize]
     public class TweetsController : ControllerBase
     {
         private readonly ILogger<TweetsController> _logger;
@@ -32,6 +34,7 @@
         /// </summary>
         /// <returns></returns>
         [Route("{username}")]
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult GetUserTweets(string username)
         {
@@ -45,6 +48,7 @@
         /// </summary>
         /// <returns></returns>
         [Route("all")]
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult GetAllTweets()
         {
