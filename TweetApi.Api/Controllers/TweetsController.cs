@@ -34,7 +34,6 @@
         /// </summary>
         /// <returns></returns>
         [Route("{username}")]
-        [AllowAnonymous]
         [HttpGet]
         public ActionResult GetUserTweets(string username)
         {
@@ -48,7 +47,6 @@
         /// </summary>
         /// <returns></returns>
         [Route("all")]
-        [AllowAnonymous]
         [HttpGet]
         public ActionResult GetAllTweets()
         {
