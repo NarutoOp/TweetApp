@@ -1,4 +1,5 @@
-import { React } from "react";
+import { React, useState } from "react";
+import { useForm } from "react-hook-form";
 import {
   Typography,
   Button,
@@ -6,10 +7,46 @@ import {
   TextField,
   Paper,
   Grid,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import "./Registration.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import KeyStore from "../KeyStore";
 
 const Registration = () => {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [errors, setErrors] = useState({});
+  const { register, handleSubmit, reset } = useForm();
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const onSubmit = async (e) => {
+    setErrors({});
+    await axios
+      .post(`${KeyStore.BaseURL}/register`, e)
+      .then((response) => {
+        setOpenSuccess(true);
+      })
+      .catch((e) => {
+        setErrors(e.response.data);
+        handleClick();
+      });
+  };
+
   return (
     <Stack
       className="Registration"
@@ -22,7 +59,7 @@ const Registration = () => {
         sx={{ width: { md: 1 / 3 } }}
         elevation={13}
       >
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Typography variant="h4" sx={{ mb: 2 }} color="deepskyblue">
             Registration
           </Typography>
@@ -30,60 +67,58 @@ const Registration = () => {
             <Grid item xs={6}>
               <TextField
                 required
-                id="outlined-required"
                 label="First Name"
+                {...register("firstName")}
                 fullWidth="true"
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
                 required
-                id="outlined-required"
                 label="Last Name"
+                {...register("lastName")}
                 fullWidth="true"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 required
-                id="outlined-required"
                 label="Email"
                 type="email"
+                {...register("email")}
                 fullWidth="true"
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
                 required
-                id="outlined-required"
                 label="Contact Number"
                 type="tel"
+                {...register("contactNumber")}
                 fullWidth="true"
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
                 required
-                id="outlined-required"
                 label="Username"
+                {...register("loginId")}
                 fullWidth="true"
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
-                id="outlined-password-input"
                 label="Password"
                 type="password"
-                autoComplete="current-password"
+                {...register("password")}
                 fullWidth="true"
               />
             </Grid>
             <Grid item xs={6}>
               <TextField
-                id="outlined-password-input"
                 label="Confirm Password"
                 type="password"
-                autoComplete="current-password"
+                {...register("confirmPassword")}
                 fullWidth="true"
               />
             </Grid>
@@ -96,9 +131,62 @@ const Registration = () => {
             color="primary"
             fullWidth="true"
           >
-            Log in
+            Register
           </Button>
         </form>
+        {errors != null ? (
+          <Snackbar
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+            open={open}
+            autoHideDuration={20000}
+            onClose={handleClose}
+          >
+            <Alert
+              elevation={6}
+              variant="filled"
+              onClose={handleClose}
+              severity="error"
+              sx={{ width: "100%" }}
+            >
+              {errors?.Info?.length > 0
+                ? errors.Info.map((err, a) => (
+                    <div>{a++ + ". " + err.Message}</div>
+                  ))
+                : errors.Message}
+            </Alert>
+          </Snackbar>
+        ) : null}
+
+        <Snackbar
+          key="successSnackbar"
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          open={openSuccess}
+          autoHideDuration={6000}
+          onClose={() => {
+            setOpenSuccess(false);
+            navigate("/login");
+            reset();
+          }}
+        >
+          <Alert
+            elevation={6}
+            variant="filled"
+            severity="success"
+            onClose={() => {
+              setOpenSuccess(false);
+              navigate("/login");
+            }}
+            sx={{ width: "100%" }}
+          >
+            Registered Succesfully
+          </Alert>
+        </Snackbar>
       </Paper>
     </Stack>
   );

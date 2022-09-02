@@ -3,6 +3,9 @@ import { Box } from "@mui/material";
 import TweetBox from "./TweetBox";
 import Post from "./Post";
 import "./Feed.css";
+import Cookies from "js-cookie";
+
+export const getUserToken = () => Cookies.get("user_token");
 
 // import FlipMove from "react-flip-move";
 
@@ -69,6 +72,7 @@ function Feed() {
         avatar="{post.avatar}"
         image="{post.image}"
       />
+      <p>{getUserToken()}</p>
     </Box>
   );
 }

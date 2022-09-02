@@ -56,7 +56,9 @@
             RuleFor(x => x.Password)
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty()
-                .WithMessage("Password cannot be blank.");
+                .WithMessage("Password cannot be blank.")
+                .Length(6, 100)
+                .WithMessage("Password cannot be less then 6 characters.");
 
             RuleFor(x => x.ConfirmPassword)
                 .Cascade(CascadeMode.Stop)
