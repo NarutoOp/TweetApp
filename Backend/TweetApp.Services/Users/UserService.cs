@@ -68,7 +68,7 @@
             return _userRepository.AddUser(user);
         }
 
-        public string Login(UserLogin userLogin)
+        public LoginResponse Login(UserLogin userLogin)
         {
             Validations.EnsureValid(userLogin, new LoginValidator(userLogin));
             var getUser = _userRepository.GetUserByUsername(userLogin.UserName)?.FirstOrDefault();
@@ -82,9 +82,17 @@
             {
                 throw new DomainException("Wrong Password", System.Net.HttpStatusCode.BadRequest);
             }
+
             var token = WebToken.GenerateJSONWebToken(userLogin, _configuration.GetSection("Jwt:Key").Value);
 
-            return token;
+            var response = new LoginResponse
+            {
+
+                UserName = getUser.LoginId,
+                Token = token
+            };
+
+            return response;
         }
 
         public User UpdatePassword(UserLogin userLogin)

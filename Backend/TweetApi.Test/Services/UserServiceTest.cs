@@ -125,7 +125,7 @@
             _mockConfiguration.Setup(x => x.GetSection(It.IsAny<string>()).Value).Returns("testkey for test");
             var ActualResult = _userService.Login(userLogin) ;
             Assert.IsNotNull(ActualResult);
-            Assert.IsInstanceOf<string>(ActualResult);
+            Assert.IsInstanceOf<LoginResponse>(ActualResult);
         }
 
         [Test]

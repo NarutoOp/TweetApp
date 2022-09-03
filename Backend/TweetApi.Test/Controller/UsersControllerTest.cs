@@ -71,7 +71,8 @@
         public void Login_ValidResponse()
         {
             var userLogin = _fixture.Create<UserLogin>();
-            _mockUserService.Setup(x => x.Login(It.IsAny<UserLogin>())).Returns("12");
+            var userLoginResponse = _fixture.Create<LoginResponse>();
+            _mockUserService.Setup(x => x.Login(It.IsAny<UserLogin>())).Returns(userLoginResponse);
             var ActualResult = _userController.Login(userLogin);
             Assert.IsNotNull(ActualResult);
             Assert.IsInstanceOf<OkObjectResult>(ActualResult);

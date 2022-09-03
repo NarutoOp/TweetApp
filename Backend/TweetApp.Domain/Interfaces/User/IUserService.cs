@@ -29,7 +29,7 @@
         /// Add user into the database
         /// </summary>
         /// <returns></returns>
-        string Login(UserLogin loginDetails);
+        LoginResponse Login(UserLogin loginDetails);
 
         /// <summary>
         /// Update user into the database
