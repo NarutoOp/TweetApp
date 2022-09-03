@@ -10,10 +10,14 @@ import FlipMove from "react-flip-move";
 // import FlipMove from "react-flip-move";
 
 function Feed() {
-  const [posts, setPosts] = useState([]);
+  const [tweets, setTweets] = useState([]);
+  const [tweetState, setTweetState] = useState(false);
+  const ChangeTweetState = () => {
+    setTweetState(!tweetState);
+  };
 
-  useEffect(() => {
-    axios
+  const fetchTweets = async () => {
+    await axios
       .get(`${KeyStore.BaseURL}/all`, {
         headers: {
           Authorization: `Bearer ${getUserToken()}`,
@@ -21,12 +25,14 @@ function Feed() {
       })
       .then((response) => {
         console.log(response);
-        setPosts(() => response.data);
+        setTweets(response.data.map((data) => data));
       })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, []);
+      .catch((e) => {});
+  };
+
+  useEffect(() => {
+    fetchTweets();
+  }, [tweetState]);
 
   return (
     <Box className="feed" sx={{ width: { md: 2 / 3, xs: 1 } }}>
@@ -34,27 +40,16 @@ function Feed() {
         <h2>Home</h2>
       </div>
 
-      <TweetBox />
+      <TweetBox stateChange={ChangeTweetState} />
 
-      {/* <FlipMove>
-        <Post
-          key="1"
-          displayName="Arpit"
-          username="Naruto"
-          verified="true"
-          text="{post.text}"
-          avatar="{post.avatar}"
-          image="{post.image}"
-        />
-      </FlipMove> */}
       <FlipMove>
-        {posts.map((post) => (
+        {tweets.map((tweet) => (
           <Post
-            key={post.id}
+            key={tweet.tweetMessage.message}
             displayName="Test User"
-            username={post.tweetMessage.username}
+            username={tweet.tweetMessage.username}
             verified="true"
-            text={post.tweetMessage.message}
+            text={tweet.tweetMessage.message}
             image="https://media3.giphy.com/media/65ATdpi3clAdjomZ39/giphy.gif"
           />
         ))}

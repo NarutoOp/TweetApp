@@ -44,7 +44,7 @@ const Navbar = (props) => {
 
   return (
     <AppBar position="sticky">
-      <Toolbar disableGlutters sx={{ backgroundColor: "deepskyblue" }}>
+      <Toolbar sx={{ backgroundColor: "deepskyblue" }}>
         <Twitter sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
         <Typography
           variant="h6"

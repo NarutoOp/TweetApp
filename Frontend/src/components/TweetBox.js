@@ -5,35 +5,35 @@ import Avatar from "../Utility/BackgroundLetterAvatars";
 import KeyStore, { getUsername, getUserToken } from "../KeyStore";
 import axios from "axios";
 
-function TweetBox() {
+function TweetBox(props) {
   const [tweetMessage, setTweetMessage] = useState("");
-  const [tweetImage, setTweetImage] = useState("");
 
-  const sendTweet = (e) => {
-    e.preventDefault();
-    axios
-      .post(
-        `${KeyStore.BaseURL}/${getUsername()}/add`,
-        {
-          tweetMessage: {
-            message: tweetMessage,
+  const sendTweet = async (e) => {
+    if (tweetMessage !== "") {
+      e.preventDefault();
+      await axios
+        .post(
+          `${KeyStore.BaseURL}/${getUsername()}/add`,
+          {
+            tweetMessage: {
+              message: tweetMessage,
+            },
           },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${getUserToken()}`,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
-    setTweetMessage("");
-    setTweetImage("");
+          {
+            headers: {
+              Authorization: `Bearer ${getUserToken()}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      setTweetMessage("");
+      props.stateChange();
+    }
   };
 
   return (
@@ -42,19 +42,13 @@ function TweetBox() {
         <div className="tweetBox__input">
           <Avatar name={getUsername()} />
           <input
+            required
             onChange={(e) => setTweetMessage(e.target.value)}
             value={tweetMessage}
             placeholder="What's happening?"
             type="text"
           />
         </div>
-        <input
-          value={tweetImage}
-          onChange={(e) => setTweetImage(e.target.value)}
-          className="tweetBox__imageInput"
-          placeholder="Optional: Enter image URL"
-          type="text"
-        />
 
         <Button
           onClick={sendTweet}
