@@ -23,7 +23,7 @@
         /// Add user into the database
         /// </summary>
         /// <returns></returns>
-        User RegisterUser(User user);
+        UserResponse RegisterUser(User user);
 
         /// <summary>
         /// Add user into the database

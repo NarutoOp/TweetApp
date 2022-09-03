@@ -64,7 +64,6 @@
         {
             var user = new User
             {
-                Id = "1",
                 FirstName = "testfirstname",
                 LastName = "testlastname",
                 Email = "test@test.com",
@@ -77,7 +76,7 @@
             _mockUserRepo.Setup(x => x.AddUser(It.IsAny<User>())).Returns(user);
             var ActualResult = _userService.RegisterUser(user);
             Assert.IsNotNull(ActualResult);
-            Assert.That(ActualResult, Is.EqualTo(user));
+            Assert.That(ActualResult.UserName, Is.EqualTo(user.LoginId));
         }
 
         [Test]

@@ -59,13 +59,18 @@
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public User RegisterUser(User user)
+        public UserResponse RegisterUser(User user)
         {
             Validations.EnsureValid(user, new UserRequestValidator(user));
             user.Id = DateTime.Now.ToString("yyyyMMddHHmmss");
             string hash = PasswordHasher.ConvertToHash(user.Password);
             user.Password = hash;
-            return _userRepository.AddUser(user);
+            var response =  _userRepository.AddUser(user);
+            return new UserResponse
+            {
+                Id = response.Id,
+                UserName = response.LoginId
+            };
         }
 
         public LoginResponse Login(UserLogin userLogin)

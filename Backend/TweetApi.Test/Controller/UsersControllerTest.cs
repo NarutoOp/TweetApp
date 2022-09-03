@@ -53,7 +53,9 @@
         {
             var user = _fixture
                             .Create<User>();
-            _mockUserService.Setup(x => x.RegisterUser(It.IsAny<User>())).Returns(user);
+            var userResponse = _fixture
+                            .Create<UserResponse>();
+            _mockUserService.Setup(x => x.RegisterUser(It.IsAny<User>())).Returns(userResponse);
             var ActualResult = _userController.Register(user);
             Assert.IsNotNull(ActualResult);
             Assert.IsInstanceOf<OkObjectResult>(ActualResult);
