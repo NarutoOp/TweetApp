@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import "./Post.css";
-import { Avatar } from "@mui/material";
+import Avatar from "../Utility/BackgroundLetterAvatars";
 import {
   VerifiedUser,
   ChatBubbleOutline,
@@ -9,11 +9,11 @@ import {
 } from "@mui/icons-material";
 
 const Post = forwardRef(
-  ({ displayName, username, verified, text, image, avatar }, ref) => {
+  ({ displayName, username, verified, text, image }, ref) => {
     return (
       <div className="post" ref={ref}>
         <div className="post__avatar">
-          <Avatar src={avatar} />
+          <Avatar name={username} />
         </div>
         <div className="post__body">
           <div className="post__header">
@@ -30,7 +30,8 @@ const Post = forwardRef(
               <p>{text}</p>
             </div>
           </div>
-          <img src={image} alt="" />
+
+          {image ? <img src={image} alt="" /> : null}
           <div className="post__footer">
             <ChatBubbleOutline fontSize="small" />
             <Repeat fontSize="small" />

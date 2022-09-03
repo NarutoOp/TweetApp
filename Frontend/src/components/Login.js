@@ -27,7 +27,8 @@ const Login = () => {
       .post(`${KeyStore.BaseURL}/login`, e)
       .then((response) => {
         console.log(response);
-        Cookies.set("user_token", response.data);
+        Cookies.set("user_token", response.data.token);
+        Cookies.set("username", response.data.userName);
         reset();
         navigate("/");
       })
