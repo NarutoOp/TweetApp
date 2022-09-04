@@ -1,33 +1,33 @@
 .feed {
-    border: 1px solid #e6ecf0;
-    min-width: fit-content;
-    overflow-y: scroll;
-    margin-left: auto;
+  border: 1px solid #e6ecf0;
+  width: 100%;
+  overflow-y: scroll;
+  margin-left: auto;
   margin-right: auto;
-    padding: 0;
-  }
-  
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .feed::-webkit-scrollbar {
-    display: none;
-  }
-  
-  /* Hide scrollbar for IE, Edge and Firefox */
-  .feed {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
-  
-  .feed__header {
-    position: sticky;
-    top: 0;
-    background-color: white;
-    z-index: 100;
-    border: 1px solid var(--twitter-background);
-    padding: 15px 20px;
-  }
-  
-  .feed__header > h2 {
-    font-size: 20px;
-    font-weight: 800;
-  }
+  padding: 0;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.feed::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.feed {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.feed__header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 100;
+  border: 1px solid #e6ecf0;
+  padding: 15px 20px;
+}
+
+.feed__header > h2 {
+  font-size: 20px;
+  font-weight: 800;
+}

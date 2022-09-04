@@ -7,24 +7,31 @@ import axios from "axios";
 
 function TweetBox(props) {
   const [tweetMessage, setTweetMessage] = useState("");
+  const reply = {
+    message: tweetMessage,
+  };
+
+  const tweet = {
+    tweetMessage: {
+      message: tweetMessage,
+    },
+  };
 
   const sendTweet = async (e) => {
     if (tweetMessage !== "") {
       e.preventDefault();
+      let payload = tweet;
+      let url = `${KeyStore.BaseURL}/${getUsername()}/add`;
+      if (props.isReply) {
+        payload = reply;
+        url = `${KeyStore.BaseURL}/${getUsername()}/reply/${props.tweetId}`;
+      }
       await axios
-        .post(
-          `${KeyStore.BaseURL}/${getUsername()}/add`,
-          {
-            tweetMessage: {
-              message: tweetMessage,
-            },
+        .post(url, payload, {
+          headers: {
+            Authorization: `Bearer ${getUserToken()}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${getUserToken()}`,
-            },
-          }
-        )
+        })
         .then((response) => {
           console.log(response);
         })
@@ -32,6 +39,9 @@ function TweetBox(props) {
           console.log(e);
         });
       setTweetMessage("");
+      if (props.isReply) {
+        props.handleClose();
+      }
       props.stateChange();
     }
   };
@@ -41,7 +51,7 @@ function TweetBox(props) {
       <form>
         <div className="tweetBox__input">
           <Avatar name={getUsername()} />
-          <input
+          <textarea
             required
             onChange={(e) => setTweetMessage(e.target.value)}
             value={tweetMessage}

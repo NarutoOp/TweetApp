@@ -32,7 +32,8 @@
 
         public List<Tweet> GetAllTweets()
         {
-            return _tweetRepo.GetAllTweets();
+            var response = _tweetRepo.GetAllTweets().OrderByDescending(x => x.TweetMessage.Created).ToList();
+            return response;
         }
 
         public Tweet AddTweet(string username, Tweet tweet)
@@ -65,6 +66,7 @@
             FieldValidator.IsValidId(id);
             Validations.EnsureValid(message, new TweetMessageValidator(message));
             message.Username = username;
+            message.Created = DateTime.Now;
             message.Tag = FetchTags(message.Message);
             return _tweetRepo.ReplyTweet(id, message);
         }

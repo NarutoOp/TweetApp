@@ -43,14 +43,18 @@ function Feed() {
       <TweetBox stateChange={ChangeTweetState} />
 
       <FlipMove>
-        {tweets.map((tweet) => (
+        {tweets?.map((tweet) => (
           <Post
-            key={tweet.tweetMessage.message}
+            key={tweet.id}
+            id={tweet.id}
             displayName="Test User"
             username={tweet.tweetMessage.username}
-            verified="true"
-            text={tweet.tweetMessage.message}
-            image="https://media3.giphy.com/media/65ATdpi3clAdjomZ39/giphy.gif"
+            created={tweet.tweetMessage.created}
+            message={tweet.tweetMessage.message}
+            reply={tweet.reply}
+            replyCount={tweet.reply?.length}
+            likeCount={tweet.like}
+            stateChange={ChangeTweetState}
           />
         ))}
       </FlipMove>
