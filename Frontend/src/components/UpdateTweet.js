@@ -77,7 +77,7 @@ export default function UpdateTweet(props) {
           <div className="tweetBox">
             <form>
               <div className="tweetBox__input">
-                <Avatar name={user.userName} />
+                <Avatar name={user.fullName} />
                 <textarea
                   required
                   onChange={(e) => setMessage(e.target.value)}

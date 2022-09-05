@@ -13,7 +13,6 @@ import axios from "axios";
 import KeyStore from "../KeyStore";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import { useAuth } from "../Auth/useAuth";
 
 const Login = () => {
@@ -29,6 +28,7 @@ const Login = () => {
       .post(`${KeyStore.BaseURL}/login`, e)
       .then((response) => {
         login({
+          fullName: response.data.name,
           userToken: response.data.token,
           userName: response.data.userName,
         });

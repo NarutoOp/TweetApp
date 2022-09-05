@@ -21,7 +21,7 @@ function TweetReplyFeed(props) {
           .reverse()
           .map((tweet) => (
             <Post
-              displayName="Test User"
+              displayName={tweet.name}
               username={tweet.username}
               created={tweet.created}
               message={tweet.message}

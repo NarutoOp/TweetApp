@@ -48,7 +48,7 @@ function Feed() {
           <Post
             key={tweet.id}
             id={tweet.id}
-            displayName="Test User"
+            displayName={tweet.tweetMessage.name}
             username={tweet.tweetMessage.username}
             created={tweet.tweetMessage.created}
             message={tweet.tweetMessage.message}

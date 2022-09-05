@@ -14,6 +14,7 @@
 
             var tweetMessageDTO = new TweetMessageDTO
             {
+                Name = tweetMessage.Name,
                 Username = tweetMessage.Username,
                 Message = tweetMessage.Message,
                 Created = tweetMessage.Created,
@@ -32,6 +33,7 @@
 
             var tweetMessage = new TweetMessage
             {
+                Name = tweetMessageDTO.Name,
                 Username = tweetMessageDTO.Username,
                 Message = tweetMessageDTO.Message,
                 Created = tweetMessageDTO.Created,

@@ -8,7 +8,7 @@ const UserCard = (props) => {
   return (
     <div className="post">
       <div className="post__avatar">
-        <Avatar name={props.username} />
+        <Avatar name={props.displayName} />
       </div>
       <div className="post__body">
         <div className="post__header">

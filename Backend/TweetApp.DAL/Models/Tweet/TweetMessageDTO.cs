@@ -4,6 +4,9 @@
 
     public class TweetMessageDTO
     {
+        [BsonElement("name")]
+        public string Name { get; set; }
+
         [BsonElement("username")]
         public string Username { get; set; }
 

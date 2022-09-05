@@ -92,7 +92,7 @@
 
             var response = new LoginResponse
             {
-
+                Name = $"{getUser.FirstName} {getUser.LastName}",
                 UserName = getUser.LoginId,
                 Token = token
             };

@@ -10,11 +10,13 @@ function TweetBox(props) {
   const { user } = useAuth();
   const [tweetMessage, setTweetMessage] = useState("");
   const reply = {
+    name: user.fullName,
     message: tweetMessage,
   };
 
   const tweet = {
     tweetMessage: {
+      name: user.fullName,
       message: tweetMessage,
     },
   };
@@ -52,7 +54,7 @@ function TweetBox(props) {
     <div className="tweetBox">
       <form>
         <div className="tweetBox__input">
-          <Avatar name={user.userName} />
+          <Avatar name={user.fullName} />
           <textarea
             required
             onChange={(e) => setTweetMessage(e.target.value)}

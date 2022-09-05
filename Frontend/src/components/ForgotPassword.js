@@ -23,8 +23,10 @@ const ForgotPassword = () => {
   const onSubmit = async (e) => {
     setErrors({});
     await axios
-      .put(`${KeyStore.BaseURL}/${e.userName}/forgot`, e.password, {
-        contenttype: "application/text",
+      .put(`${KeyStore.BaseURL}/${e.userName}/forgot`, e.password.toString(), {
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
       .then((response) => {
         reset();
@@ -34,7 +36,6 @@ const ForgotPassword = () => {
       .catch((err) => {
         setErrors(err.response.data);
         console.log(err);
-        console.log(e.password);
         setOpen(true);
       });
   };
