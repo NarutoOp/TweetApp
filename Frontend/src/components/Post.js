@@ -3,6 +3,10 @@ import "./Post.css";
 import Avatar from "../Utility/BackgroundLetterAvatars";
 import Reply from "./Reply";
 import Like from "./Like";
+import UpdatePost from "./UpdatePost";
+import { IconButton } from "@mui/material";
+import { Link } from "react-router-dom";
+import { getUsername } from "../KeyStore";
 
 const postTime = (time) => {
   let now = new Date();
@@ -37,7 +41,15 @@ const Post = forwardRef((props, ref) => {
   return (
     <div className="post" ref={ref}>
       <div className="post__avatar">
-        <Avatar name={props.username} />
+        <IconButton>
+          <Link
+            style={{ textDecoration: "none" }}
+            to={`/UserTweet`}
+            state={{ tweet: props }}
+          >
+            <Avatar name={props.username} />
+          </Link>
+        </IconButton>
       </div>
       <div className="post__body">
         <div className="post__header">
@@ -62,6 +74,13 @@ const Post = forwardRef((props, ref) => {
                 stateChange={props.stateChange}
                 reply={props.reply}
               />
+              {props.username === getUsername() ? (
+                <UpdatePost
+                  tweetId={props.id}
+                  stateChange={props.stateChange}
+                  message={props.message}
+                />
+              ) : null}
             </div>
           </div>
         )}

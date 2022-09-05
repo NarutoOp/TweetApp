@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Button,
-  TextField,
-  IconButton,
-  InputBase,
-  Paper,
-} from "@mui/material";
+import { Box, IconButton, InputBase, Paper } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import UserCard from "././UserCard";
 import "./Feed.css";
