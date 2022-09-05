@@ -5,9 +5,7 @@ import Reply from "./Reply";
 import Like from "./Like";
 import UpdateTweet from "./UpdateTweet";
 import DeleteTweet from "./DeleteTweet";
-import { IconButton } from "@mui/material";
-import { Link } from "react-router-dom";
-import { getUsername } from "../KeyStore";
+import { useAuth } from "../Auth/useAuth";
 
 const postTime = (time) => {
   let now = new Date();
@@ -39,18 +37,11 @@ const postTime = (time) => {
   return response;
 };
 const Post = forwardRef((props, ref) => {
+  const { user } = useAuth();
   return (
     <div className="post" ref={ref}>
       <div className="post__avatar">
-        <IconButton>
-          <Link
-            style={{ textDecoration: "none" }}
-            to={`/UserTweet`}
-            state={{ tweet: props }}
-          >
-            <Avatar name={props.username} />
-          </Link>
-        </IconButton>
+        <Avatar name={props.username} />
       </div>
       <div className="post__body">
         <div className="post__header">
@@ -75,14 +66,14 @@ const Post = forwardRef((props, ref) => {
                 stateChange={props.stateChange}
                 reply={props.reply}
               />
-              {props.username === getUsername() ? (
+              {props.username === user.userName ? (
                 <UpdateTweet
                   tweetId={props.id}
                   stateChange={props.stateChange}
                   message={props.message}
                 />
               ) : null}
-              {props.username === getUsername() ? (
+              {props.username === user.userName ? (
                 <DeleteTweet
                   tweetId={props.id}
                   stateChange={props.stateChange}

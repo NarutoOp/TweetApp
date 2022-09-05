@@ -13,30 +13,28 @@ import axios from "axios";
 import KeyStore from "../KeyStore";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
-import { useAuth } from "../Auth/useAuth";
 
-const Login = () => {
+const ForgotPassword = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, reset } = useForm();
   const [errors, setErrors] = useState({});
-  const { login } = useAuth();
 
   const onSubmit = async (e) => {
     setErrors({});
     await axios
-      .post(`${KeyStore.BaseURL}/login`, e)
-      .then((response) => {
-        login({
-          userToken: response.data.token,
-          userName: response.data.userName,
-        });
-        reset();
+      .put(`${KeyStore.BaseURL}/${e.userName}/forgot`, e.password, {
+        contenttype: "application/text",
       })
-      .catch((e) => {
-        setErrors(e.response.data);
-        console.log(e);
+      .then((response) => {
+        reset();
+        alert("Password changed successfully !!");
+        navigate("/login");
+      })
+      .catch((err) => {
+        setErrors(err.response.data);
+        console.log(err);
+        console.log(e.password);
         setOpen(true);
       });
   };
@@ -56,7 +54,7 @@ const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction="column" alignItems="center" spacing={3}>
             <Typography variant="h4" color="deepskyblue">
-              Login
+              Forgot Password
             </Typography>
             <TextField
               required
@@ -78,16 +76,9 @@ const Login = () => {
               color="primary"
               fullWidth="true"
             >
-              Log in
+              Change Password
             </Button>
           </Stack>
-          <Button
-            onClick={() => navigate("/ForgotPassword")}
-            sx={{ mt: 2 }}
-            color="primary"
-          >
-            <h6>Forgot Password</h6>
-          </Button>
         </form>
         {errors != null ? (
           <Snackbar
@@ -119,4 +110,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;

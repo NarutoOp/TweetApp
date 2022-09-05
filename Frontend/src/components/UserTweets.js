@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import Post from "./Post";
 import "./Feed.css";
-import KeyStore, { getUserToken } from "../KeyStore";
+import KeyStore from "../KeyStore";
 import axios from "axios";
 import FlipMove from "react-flip-move";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
+import { useAuth } from "../Auth/useAuth";
+import { ArrowBack } from "@mui/icons-material";
 
 const UserTweets = () => {
+  const { user } = useAuth();
   const location = useLocation();
   const [userTweets, setUserTweets] = useState([]);
   const [tweetState, setTweetState] = useState(false);
@@ -19,7 +22,7 @@ const UserTweets = () => {
     await axios
       .get(`${KeyStore.BaseURL}/${location.state.username}`, {
         headers: {
-          Authorization: `Bearer ${getUserToken()}`,
+          Authorization: `Bearer ${user.userToken}`,
         },
       })
       .then((response) => {
@@ -37,6 +40,11 @@ const UserTweets = () => {
   return (
     <Box className="feed" sx={{ width: { md: 2 / 3, xs: 1 } }}>
       <div className="feed__header">
+        <IconButton>
+          <Link to="/Users">
+            <ArrowBack />
+          </Link>
+        </IconButton>
         <h2>User Tweets</h2>
       </div>
 

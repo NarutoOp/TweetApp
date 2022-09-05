@@ -1,23 +1,25 @@
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
-import KeyStore, { getUserToken, getUsername } from "../KeyStore";
+import KeyStore from "../KeyStore";
 import axios from "axios";
+import { useAuth } from "../Auth/useAuth";
 
 export default function Like(props) {
+  const { user } = useAuth();
   const [like, setLike] = useState({
-    isLiked: props.like?.some((ele) => ele === getUsername()),
+    isLiked: props.like?.some((ele) => ele === user.userName),
     likeCount: props.like?.length,
   });
 
   const handleLike = async () => {
     await axios
       .put(
-        `${KeyStore.BaseURL}/${getUsername()}/like/${props.tweetId}`,
+        `${KeyStore.BaseURL}/${user.userName}/like/${props.tweetId}`,
         {},
         {
           headers: {
-            Authorization: `Bearer ${getUserToken()}`,
+            Authorization: `Bearer ${user.userToken}`,
           },
         }
       )

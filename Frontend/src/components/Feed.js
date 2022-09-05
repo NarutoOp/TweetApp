@@ -3,11 +3,13 @@ import { Box } from "@mui/material";
 import TweetBox from "./TweetBox";
 import Post from "./Post";
 import "./Feed.css";
-import KeyStore, { getUserToken } from "../KeyStore";
+import KeyStore from "../KeyStore";
 import axios from "axios";
 import FlipMove from "react-flip-move";
+import { useAuth } from "../Auth/useAuth";
 
 function Feed() {
+  const { user } = useAuth();
   const [tweets, setTweets] = useState([]);
   const [tweetState, setTweetState] = useState(false);
   const ChangeTweetState = () => {
@@ -18,7 +20,7 @@ function Feed() {
     await axios
       .get(`${KeyStore.BaseURL}/all`, {
         headers: {
-          Authorization: `Bearer ${getUserToken()}`,
+          Authorization: `Bearer ${user.userToken}`,
         },
       })
       .then((response) => {

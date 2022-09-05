@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import "./TweetBox.css";
 import { Button } from "@mui/material";
 import Avatar from "../Utility/BackgroundLetterAvatars";
-import KeyStore, { getUsername, getUserToken } from "../KeyStore";
+import KeyStore from "../KeyStore";
 import axios from "axios";
+import { useAuth } from "../Auth/useAuth";
 
 function TweetBox(props) {
+  const { user } = useAuth();
   const [tweetMessage, setTweetMessage] = useState("");
   const reply = {
     message: tweetMessage,
@@ -21,15 +23,15 @@ function TweetBox(props) {
     if (tweetMessage !== "") {
       e.preventDefault();
       let payload = tweet;
-      let url = `${KeyStore.BaseURL}/${getUsername()}/add`;
+      let url = `${KeyStore.BaseURL}/${user.userName}/add`;
       if (props.isReply) {
         payload = reply;
-        url = `${KeyStore.BaseURL}/${getUsername()}/reply/${props.tweetId}`;
+        url = `${KeyStore.BaseURL}/${user.userName}/reply/${props.tweetId}`;
       }
       await axios
         .post(url, payload, {
           headers: {
-            Authorization: `Bearer ${getUserToken()}`,
+            Authorization: `Bearer ${user.userToken}`,
           },
         })
         .then((response) => {
@@ -50,7 +52,7 @@ function TweetBox(props) {
     <div className="tweetBox">
       <form>
         <div className="tweetBox__input">
-          <Avatar name={getUsername()} />
+          <Avatar name={user.userName} />
           <textarea
             required
             onChange={(e) => setTweetMessage(e.target.value)}

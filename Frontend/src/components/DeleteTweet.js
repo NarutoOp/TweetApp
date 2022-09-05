@@ -6,11 +6,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { DeleteForever, ClearSharp } from "@mui/icons-material";
 import Avatar from "../Utility/BackgroundLetterAvatars";
-import KeyStore, { getUsername, getUserToken } from "../KeyStore";
+import KeyStore from "../KeyStore";
 import axios from "axios";
-import { flexbox } from "@mui/system";
+import { useAuth } from "../Auth/useAuth";
 
 export default function DeleteTweet(props) {
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -24,9 +25,9 @@ export default function DeleteTweet(props) {
 
   const deleteTweet = async () => {
     await axios
-      .delete(`${KeyStore.BaseURL}/${getUsername()}/delete/${props.tweetId}`, {
+      .delete(`${KeyStore.BaseURL}/${user.userName}/delete/${props.tweetId}`, {
         headers: {
-          Authorization: `Bearer ${getUserToken()}`,
+          Authorization: `Bearer ${user.userToken}`,
         },
       })
       .then((response) => {

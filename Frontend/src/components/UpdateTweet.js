@@ -6,10 +6,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Update, ClearSharp } from "@mui/icons-material";
 import Avatar from "../Utility/BackgroundLetterAvatars";
-import KeyStore, { getUsername, getUserToken } from "../KeyStore";
+import KeyStore from "../KeyStore";
 import axios from "axios";
+import { useAuth } from "../Auth/useAuth";
 
 export default function UpdateTweet(props) {
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -26,7 +28,7 @@ export default function UpdateTweet(props) {
       e.preventDefault();
       await axios
         .put(
-          `${KeyStore.BaseURL}/${getUsername()}/update/${props.tweetId}`,
+          `${KeyStore.BaseURL}/${user.userName}/update/${props.tweetId}`,
           {
             tweetMessage: {
               message: message,
@@ -34,7 +36,7 @@ export default function UpdateTweet(props) {
           },
           {
             headers: {
-              Authorization: `Bearer ${getUserToken()}`,
+              Authorization: `Bearer ${user.userToken}`,
             },
           }
         )
@@ -75,7 +77,7 @@ export default function UpdateTweet(props) {
           <div className="tweetBox">
             <form>
               <div className="tweetBox__input">
-                <Avatar name={getUsername()} />
+                <Avatar name={user.userName} />
                 <textarea
                   required
                   onChange={(e) => setMessage(e.target.value)}

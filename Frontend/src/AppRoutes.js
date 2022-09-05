@@ -3,11 +3,17 @@ import Registration from "./components/Registration";
 import Feed from "./components/Feed";
 import Users from "./components/Users";
 import UserTweets from "./components/UserTweets";
+import { ProtectedRoute } from "./Auth/ProtectedRoute";
+import ForgotPassword from "./components/ForgotPassword";
 
 const AppRoutes = [
   {
     index: true,
-    element: <Feed />,
+    element: (
+      <ProtectedRoute>
+        <Feed />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/Login",
@@ -18,12 +24,24 @@ const AppRoutes = [
     element: <Registration />,
   },
   {
+    path: "/ForgotPassword",
+    element: <ForgotPassword />,
+  },
+  {
     path: "/Users",
-    element: <Users />,
+    element: (
+      <ProtectedRoute>
+        <Users />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/UserTweets",
-    element: <UserTweets />,
+    element: (
+      <ProtectedRoute>
+        <UserTweets />
+      </ProtectedRoute>
+    ),
   },
 ];
 
