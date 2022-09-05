@@ -1,27 +1,39 @@
 import React, { forwardRef } from "react";
 import "./Post.css";
 import Avatar from "../Utility/BackgroundLetterAvatars";
-import { Button } from "@mui/material";
-import { FavoriteBorder } from "@mui/icons-material";
 import Reply from "./Reply";
+import Like from "./Like";
 
+const postTime = (time) => {
+  let now = new Date();
+  let current = new Date(time);
+
+  let response;
+  if (now.getFullYear() - current.getFullYear() !== 0) {
+    response =
+      current.getDate() +
+      " " +
+      current.toLocaleString("en-US", { month: "short" }) +
+      ", " +
+      current.getFullYear();
+  } else if (
+    now.getMonth() - current.getMonth() !== 0 &&
+    now.getDate() - current.getDate() !== 0
+  ) {
+    response =
+      current.getDate() +
+      " " +
+      current.toLocaleString("en-US", { month: "short" });
+  } else if (now.getHours() - current.getHours() !== 0) {
+    response = now.getHours() - current.getHours() + "h";
+  } else if (now.getMinutes() - current.getMinutes() !== 0) {
+    response = now.getMinutes() - current.getMinutes() + "m";
+  } else {
+    response = now.getSeconds() - current.getSeconds() + "s";
+  }
+  return response;
+};
 const Post = forwardRef((props, ref) => {
-  const postTime = (time) => {
-    let current = new Date(time);
-    let cDate =
-      current.getFullYear() +
-      "-" +
-      (current.getMonth() + 1) +
-      "-" +
-      current.getDate();
-    let cTime =
-      current.getHours() +
-      ":" +
-      current.getMinutes() +
-      ":" +
-      current.getSeconds();
-    return cDate + "  " + cTime;
-  };
   return (
     <div className="post" ref={ref}>
       <div className="post__avatar">
@@ -43,10 +55,7 @@ const Post = forwardRef((props, ref) => {
         {props.isReply ? null : (
           <div>
             <div className="post__footer">
-              <Button color="error">
-                <FavoriteBorder fontSize="small" />
-                {props.likeCount}
-              </Button>
+              <Like tweetId={props.id} like={props.like} />
               <Reply
                 replyCount={props.replyCount}
                 tweetId={props.id}

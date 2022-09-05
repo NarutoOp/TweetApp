@@ -53,7 +53,7 @@ function Feed() {
             message={tweet.tweetMessage.message}
             reply={tweet.reply}
             replyCount={tweet.reply?.length}
-            likeCount={tweet.like}
+            like={tweet.like}
             stateChange={ChangeTweetState}
           />
         ))}

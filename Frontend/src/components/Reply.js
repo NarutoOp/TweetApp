@@ -20,12 +20,13 @@ export default function Reply(props) {
   };
 
   return (
-    <div>
+    <Box>
       <Button onClick={handleClickOpen}>
         <ChatBubbleOutline fontSize="small" />
         {props.replyCount}
       </Button>
-      <Dialog open={open} onClose={handleClose}>
+
+      <Dialog open={open} onClose={handleClose} fullWidth={true}>
         <DialogTitle>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <span>Reply</span>
@@ -34,6 +35,7 @@ export default function Reply(props) {
             </IconButton>
           </Box>
         </DialogTitle>
+
         <DialogContent>
           <div className="feed">
             <TweetBox
@@ -48,6 +50,6 @@ export default function Reply(props) {
           </div>
         </DialogContent>
       </Dialog>
-    </div>
+    </Box>
   );
 }

@@ -55,10 +55,10 @@
             return _tweetRepo.UpdateTweet(id, tweet);
         }
 
-        public Tweet LikeTweet(string id)
+        public LikeTweetResponse LikeTweet(string username, string id)
         {
             FieldValidator.IsValidId(id);
-            return _tweetRepo.LikeTweet(id);
+            return _tweetRepo.LikeTweet(username, id);
         }
 
         public Tweet ReplyTweet(string username, string id, TweetMessage message)

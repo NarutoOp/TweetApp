@@ -91,8 +91,9 @@
         public void LikeTweet_ValidResponse()
         {
             var tweet = _fixture.Create<Tweet>();
-            _mockTweetService.Setup(x => x.LikeTweet(It.IsAny<string>())).Returns(tweet);
-            var ActualResult = _tweetController.LikeTweet("test");
+            var likeResponse = _fixture.Create<LikeTweetResponse>();
+            _mockTweetService.Setup(x => x.LikeTweet(It.IsAny<string>(),It.IsAny<string>())).Returns(likeResponse);
+            var ActualResult = _tweetController.LikeTweet("testuser","testId");
             Assert.IsNotNull(ActualResult);
             Assert.IsInstanceOf<OkObjectResult>(ActualResult);
         }

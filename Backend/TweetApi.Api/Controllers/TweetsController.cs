@@ -95,9 +95,9 @@
         /// <returns></returns>
         [Route("{username}/like/{id}")]
         [HttpPut]
-        public ActionResult LikeTweet(string id)
+        public ActionResult LikeTweet(string username, string id)
         {
-            var result = _tweetService.LikeTweet(id);
+            var result = _tweetService.LikeTweet(username, id);
             _logger.LogInformation("LikeTweet", result);
             return Ok(result);
         }

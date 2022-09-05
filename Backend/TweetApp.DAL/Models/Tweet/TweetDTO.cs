@@ -15,7 +15,7 @@
 
         [BsonIgnoreIfNull]
         [BsonElement("like")]
-        public int? Like { get; set; }
+        public List<string>? Like { get; set; }
 
         [BsonIgnoreIfNull]
         [BsonElement("reply")]

@@ -65,7 +65,7 @@
             return result;
         }
 
-        public Tweet LikeTweet(string id)
+        public LikeTweetResponse LikeTweet(string username, string id)
         {
             var tweetDTO = _tweetCollection.Find(x => x.Id == id).FirstOrDefault();
             if(tweetDTO == null)
@@ -74,13 +74,27 @@
             }
             if (tweetDTO.Like == null)
             {
-                tweetDTO.Like = 0;
+                tweetDTO.Like = new List<string>();
             }
 
-            tweetDTO.Like++;
+            bool like;
+            if(tweetDTO.Like.Any(x => string.Equals(x, username)))
+            {
+                tweetDTO.Like.Remove(username);
+                like = false;
+            }
+            else
+            {
+                tweetDTO.Like.Add(username);
+                like = true;
+            }
             _tweetCollection.ReplaceOne(x => x.Id == id, tweetDTO);
 
-            return TweetTranslator.TweetDTOToTweet(tweetDTO);
+            return new LikeTweetResponse 
+            { 
+                IsLiked=like,
+                LikeCount=tweetDTO.Like.Count()
+            };
         }
 
         public Tweet ReplyTweet(string id, TweetMessage message)

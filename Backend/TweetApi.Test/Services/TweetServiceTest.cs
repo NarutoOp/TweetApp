@@ -98,10 +98,11 @@
         public void LikeTweet_ValidResponse()
         {
             var tweet = _fixture.Create<Tweet>();
-            _mockTweetRepo.Setup(x => x.LikeTweet(It.IsAny<string>())).Returns(tweet);
-            var ActualResult = _tweetService.LikeTweet("11112233445566");
+            var likeResponse = _fixture.Create<LikeTweetResponse>();
+            _mockTweetRepo.Setup(x => x.LikeTweet(It.IsAny<string>(),It.IsAny<string>())).Returns(likeResponse);
+            var ActualResult = _tweetService.LikeTweet("testUser","11112233445566");
             Assert.IsNotNull(ActualResult);
-            Assert.That(tweet, Is.EqualTo(ActualResult));
+            Assert.That(likeResponse, Is.EqualTo(ActualResult));
         }
 
         [Test]

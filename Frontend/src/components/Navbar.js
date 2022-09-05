@@ -11,17 +11,9 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Twitter } from "@mui/icons-material";
-import { InputBase, styled } from "@mui/material";
 
 const pages = ["Tweets", "Users", "Login", "Registration"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
-const Search = styled("div")(({ theme }) => ({
-  backgroundColor: "white",
-  padding: "0 10px",
-  borderRadius: theme.shape.borderRadius,
-  width: "20%",
-}));
 
 const Navbar = (props) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -96,7 +88,10 @@ const Navbar = (props) => {
             {pages.map((page) => (
               <MenuItem key={page} onClick={handleCloseNavMenu}>
                 <Typography textAlign="center">
-                  <Link style={{ textDecoration: "none" }} to={`${page}`}>
+                  <Link
+                    style={{ textDecoration: "none" }}
+                    to={page === "Tweets" ? `/` : `${page}`}
+                  >
                     {page}
                   </Link>
                 </Typography>
@@ -114,17 +109,13 @@ const Navbar = (props) => {
             >
               <Link
                 style={{ textDecoration: "none", color: "white" }}
-                to={`${page}`}
+                to={page === "Tweets" ? `/` : `${page}`}
               >
                 {page}
               </Link>
             </Button>
           ))}
         </Box>
-
-        <Search sx={{ mr: 2 }}>
-          <InputBase placeholder="search..." />
-        </Search>
         <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

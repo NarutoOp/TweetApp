@@ -11,7 +11,7 @@
         List<Tweet> GetAllTweets();
         Tweet AddTweet(string username, Tweet tweet);
         Tweet UpdateTweet(string id, Tweet tweet);
-        Tweet LikeTweet(string id);
+        LikeTweetResponse LikeTweet(string username, string id);
         Tweet ReplyTweet(string username, string id, TweetMessage message);
         long DeleteTweet(string id);
     }
