@@ -9,7 +9,7 @@ import Avatar from "../Utility/BackgroundLetterAvatars";
 import KeyStore, { getUsername, getUserToken } from "../KeyStore";
 import axios from "axios";
 
-export default function Reply(props) {
+export default function UpdateTweet(props) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -59,7 +59,6 @@ export default function Reply(props) {
     <Box>
       <Button onClick={handleClickOpen}>
         <Update fontSize="small" sx={{ color: "#76ff03" }} />
-        {props.replyCount}
       </Button>
 
       <Dialog open={open} onClose={handleClose} fullWidth={true}>

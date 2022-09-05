@@ -3,7 +3,8 @@ import "./Post.css";
 import Avatar from "../Utility/BackgroundLetterAvatars";
 import Reply from "./Reply";
 import Like from "./Like";
-import UpdatePost from "./UpdatePost";
+import UpdateTweet from "./UpdateTweet";
+import DeleteTweet from "./DeleteTweet";
 import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import { getUsername } from "../KeyStore";
@@ -75,10 +76,16 @@ const Post = forwardRef((props, ref) => {
                 reply={props.reply}
               />
               {props.username === getUsername() ? (
-                <UpdatePost
+                <UpdateTweet
                   tweetId={props.id}
                   stateChange={props.stateChange}
                   message={props.message}
+                />
+              ) : null}
+              {props.username === getUsername() ? (
+                <DeleteTweet
+                  tweetId={props.id}
+                  stateChange={props.stateChange}
                 />
               ) : null}
             </div>
