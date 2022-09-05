@@ -1,6 +1,8 @@
 import Login from "./components/Login";
 import Registration from "./components/Registration";
 import Feed from "./components/Feed";
+import Users from "./components/Users";
+import UserTweets from "./components/UserTweets";
 
 const AppRoutes = [
   {
@@ -14,6 +16,14 @@ const AppRoutes = [
   {
     path: "/Registration",
     element: <Registration />,
+  },
+  {
+    path: "/Users",
+    element: <Users />,
+  },
+  {
+    path: "/UserTweets",
+    element: <UserTweets />,
   },
 ];
 

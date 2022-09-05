@@ -6,8 +6,8 @@ import axios from "axios";
 
 export default function Like(props) {
   const [like, setLike] = useState({
-    isLiked: props.like.some((ele) => ele === getUsername()),
-    likeCount: props.like.length,
+    isLiked: props.like?.some((ele) => ele === getUsername()),
+    likeCount: props.like?.length,
   });
 
   const handleLike = async () => {

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import TweetBox from "./TweetBox";
 import Post from "./Post";
 import "./Feed.css";
 import KeyStore, { getUserToken } from "../KeyStore";
 import axios from "axios";
 import FlipMove from "react-flip-move";
+import { useLocation } from "react-router-dom";
 
-function Feed() {
-  const [tweets, setTweets] = useState([]);
+const UserTweets = () => {
+  const location = useLocation();
+  const [userTweets, setUserTweets] = useState([]);
   const [tweetState, setTweetState] = useState(false);
   const ChangeTweetState = () => {
     setTweetState(!tweetState);
@@ -16,13 +17,13 @@ function Feed() {
 
   const fetchTweets = async () => {
     await axios
-      .get(`${KeyStore.BaseURL}/all`, {
+      .get(`${KeyStore.BaseURL}/${location.state.username}`, {
         headers: {
           Authorization: `Bearer ${getUserToken()}`,
         },
       })
       .then((response) => {
-        setTweets(response.data.map((data) => data));
+        setUserTweets(response.data.map((data) => data));
       })
       .catch((e) => {
         console.log(e);
@@ -31,18 +32,16 @@ function Feed() {
 
   useEffect(() => {
     fetchTweets();
-  }, [tweetState]);
+  }, []);
 
   return (
     <Box className="feed" sx={{ width: { md: 2 / 3, xs: 1 } }}>
       <div className="feed__header">
-        <h2>Home</h2>
+        <h2>User Tweets</h2>
       </div>
 
-      <TweetBox stateChange={ChangeTweetState} />
-
       <FlipMove>
-        {tweets?.map((tweet) => (
+        {userTweets?.map((tweet) => (
           <Post
             key={tweet.id}
             id={tweet.id}
@@ -59,6 +58,6 @@ function Feed() {
       </FlipMove>
     </Box>
   );
-}
+};
 
-export default Feed;
+export default UserTweets;
