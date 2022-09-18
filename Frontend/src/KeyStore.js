@@ -1,5 +1,7 @@
+const LocalHost = "https://localhost:44333";
+const Prod = "https://yjfxhuhoge.execute-api.us-east-1.amazonaws.com/Prod";
 const KeyStore = {
-  BaseURL: "https://localhost:44333/api/v1.0/tweets",
+  BaseURL: `${Prod}/api/v1.0/tweets`,
 };
 
 export default KeyStore;
