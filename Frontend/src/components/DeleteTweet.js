@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, CircularProgress } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -14,6 +14,7 @@ export default function DeleteTweet(props) {
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  let [loading, setLoading] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -24,6 +25,7 @@ export default function DeleteTweet(props) {
   };
 
   const deleteTweet = async () => {
+    setLoading(true);
     await axios
       .delete(`${KeyStore.BaseURL}/${user.userName}/delete/${props.tweetId}`, {
         headers: {
@@ -31,9 +33,11 @@ export default function DeleteTweet(props) {
         },
       })
       .then((response) => {
+        setLoading(false);
         console.log(response);
       })
       .catch((e) => {
+        setLoading(false);
         console.log(e);
       });
     setMessage("");
@@ -63,10 +67,25 @@ export default function DeleteTweet(props) {
         </DialogTitle>
 
         <DialogContent>
-          <Button onClick={deleteTweet} color="error">
-            Delete
-          </Button>
-          <Button onClick={handleClose}>No</Button>
+          {loading ? (
+            <Box
+              sx={{
+                display: "flex",
+                height: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <CircularProgress color="secondary" />
+            </Box>
+          ) : (
+            <>
+              <Button onClick={deleteTweet} color="error">
+                Delete
+              </Button>
+              <Button onClick={handleClose}>No</Button>
+            </>
+          )}
         </DialogContent>
       </Dialog>
     </Box>

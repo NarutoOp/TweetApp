@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, CircularProgress } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -14,6 +14,7 @@ export default function UpdateTweet(props) {
   const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  let [loading, setLoading] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -24,6 +25,7 @@ export default function UpdateTweet(props) {
   };
 
   const updateTweet = async (e) => {
+    setLoading(true);
     if (message !== "") {
       e.preventDefault();
       await axios
@@ -41,10 +43,10 @@ export default function UpdateTweet(props) {
           }
         )
         .then((response) => {
-          console.log(response);
+          setLoading(false);
         })
         .catch((e) => {
-          console.log(e);
+          setLoading(false);
         });
       setMessage("");
       handleClose();
@@ -75,25 +77,38 @@ export default function UpdateTweet(props) {
 
         <DialogContent>
           <div className="tweetBox">
-            <form>
-              <div className="tweetBox__input">
-                <Avatar name={user.fullName} />
-                <textarea
-                  required
-                  onChange={(e) => setMessage(e.target.value)}
-                  value={message}
-                  type="text"
-                />
-              </div>
-
-              <Button
-                onClick={updateTweet}
-                type="submit"
-                className="tweetBox__tweetButton"
+            {loading ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  height: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
-                Update
-              </Button>
-            </form>
+                <CircularProgress color="secondary" />
+              </Box>
+            ) : (
+              <form>
+                <div className="tweetBox__input">
+                  <Avatar name={user.fullName} />
+                  <textarea
+                    required
+                    onChange={(e) => setMessage(e.target.value)}
+                    value={message}
+                    type="text"
+                  />
+                </div>
+
+                <Button
+                  onClick={updateTweet}
+                  type="submit"
+                  className="tweetBox__tweetButton"
+                >
+                  Update
+                </Button>
+              </form>
+            )}
           </div>
         </DialogContent>
       </Dialog>

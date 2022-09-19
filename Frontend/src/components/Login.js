@@ -7,6 +7,8 @@ import {
   TextField,
   Paper,
   Snackbar,
+  CircularProgress,
+  Box,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -20,13 +22,16 @@ const Login = () => {
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, reset } = useForm();
   const [errors, setErrors] = useState({});
+  let [loading, setLoading] = useState(false);
   const { login } = useAuth();
 
   const onSubmit = async (e) => {
+    setLoading(true);
     setErrors({});
     await axios
       .post(`${KeyStore.BaseURL}/login`, e)
       .then((response) => {
+        setLoading(false);
         login({
           fullName: response.data.name,
           userToken: response.data.token,
@@ -36,12 +41,24 @@ const Login = () => {
       })
       .catch((e) => {
         setErrors(e.response.data);
+        setLoading(false);
         console.log(e);
         setOpen(true);
       });
   };
 
-  return (
+  return loading ? (
+    <Box
+      sx={{
+        display: "flex",
+        height: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <CircularProgress color="secondary" />
+    </Box>
+  ) : (
     <Stack
       className="Login"
       direction="column"
