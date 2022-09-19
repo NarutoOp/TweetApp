@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import TweetBox from "./TweetBox";
 import Post from "./Post";
 import "../CSS/Feed.css";
@@ -43,22 +43,35 @@ function Feed() {
 
       <TweetBox stateChange={ChangeTweetState} />
 
-      <FlipMove>
-        {tweets?.map((tweet) => (
-          <Post
-            key={tweet.id}
-            id={tweet.id}
-            displayName={tweet.tweetMessage.name}
-            username={tweet.tweetMessage.username}
-            created={tweet.tweetMessage.created}
-            message={tweet.tweetMessage.message}
-            reply={tweet.reply}
-            replyCount={tweet.reply?.length}
-            like={tweet.like}
-            stateChange={ChangeTweetState}
-          />
-        ))}
-      </FlipMove>
+      {tweets.length > 0 ? (
+        <FlipMove>
+          {tweets?.map((tweet) => (
+            <Post
+              key={tweet.id}
+              id={tweet.id}
+              displayName={tweet.tweetMessage.name}
+              username={tweet.tweetMessage.username}
+              created={tweet.tweetMessage.created}
+              message={tweet.tweetMessage.message}
+              reply={tweet.reply}
+              replyCount={tweet.reply?.length}
+              like={tweet.like}
+              stateChange={ChangeTweetState}
+            />
+          ))}
+        </FlipMove>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            height: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress color="secondary" />
+        </Box>
+      )}
     </Box>
   );
 }

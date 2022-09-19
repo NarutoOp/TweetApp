@@ -7,6 +7,8 @@ import {
   TextField,
   Paper,
   Snackbar,
+  CircularProgress,
+  Box,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -19,8 +21,10 @@ const ForgotPassword = () => {
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, reset } = useForm();
   const [errors, setErrors] = useState({});
+  let [loading, setLoading] = useState(false);
 
   const onSubmit = async (e) => {
+    setLoading(true);
     setErrors({});
     await axios
       .put(`${KeyStore.BaseURL}/${e.userName}/forgot`, e.password.toString(), {
@@ -29,18 +33,31 @@ const ForgotPassword = () => {
         },
       })
       .then((response) => {
+        setLoading(false);
         reset();
         alert("Password changed successfully !!");
         navigate("/login");
       })
       .catch((err) => {
+        setLoading(false);
         setErrors(err.response.data);
         console.log(err);
         setOpen(true);
       });
   };
 
-  return (
+  return loading ? (
+    <Box
+      sx={{
+        display: "flex",
+        height: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <CircularProgress color="secondary" />
+    </Box>
+  ) : (
     <Stack
       className="Login"
       direction="column"

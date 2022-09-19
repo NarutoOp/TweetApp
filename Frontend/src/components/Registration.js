@@ -9,6 +9,8 @@ import {
   Grid,
   Snackbar,
   Alert,
+  CircularProgress,
+  Box,
 } from "@mui/material";
 import "../CSS/Registration.css";
 import axios from "axios";
@@ -21,6 +23,7 @@ const Registration = () => {
   const [openSuccess, setOpenSuccess] = useState(false);
   const [errors, setErrors] = useState({});
   const { register, handleSubmit, reset } = useForm();
+  let [loading, setLoading] = useState(false);
 
   const handleClick = () => {
     setOpen(true);
@@ -35,19 +38,33 @@ const Registration = () => {
   };
 
   const onSubmit = async (e) => {
+    setLoading(true);
     setErrors({});
     await axios
       .post(`${KeyStore.BaseURL}/register`, e)
       .then((response) => {
+        setLoading(false);
         setOpenSuccess(true);
       })
       .catch((e) => {
+        setLoading(false);
         setErrors(e.response.data);
         handleClick();
       });
   };
 
-  return (
+  return loading ? (
+    <Box
+      sx={{
+        display: "flex",
+        height: 1,
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <CircularProgress color="secondary" />
+    </Box>
+  ) : (
     <Stack
       className="Registration"
       direction="column"
