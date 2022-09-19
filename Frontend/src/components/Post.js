@@ -9,7 +9,9 @@ import { useAuth } from "../Auth/useAuth";
 
 const postTime = (time) => {
   let now = new Date();
+  console.log(now);
   let current = new Date(time);
+  console.log(current);
 
   let response;
   if (now.getFullYear() - current.getFullYear() !== 0) {
@@ -20,7 +22,7 @@ const postTime = (time) => {
       ", " +
       current.getFullYear();
   } else if (
-    now.getMonth() - current.getMonth() !== 0 &&
+    now.getMonth() - current.getMonth() !== 0 ||
     now.getDate() - current.getDate() !== 0
   ) {
     response =
