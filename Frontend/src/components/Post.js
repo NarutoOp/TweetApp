@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import "./Post.css";
+import "../CSS/Post.css";
 import Avatar from "../Utility/BackgroundLetterAvatars";
 import Reply from "./Reply";
 import Like from "./Like";

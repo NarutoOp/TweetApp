@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Container from "@mui/material/Container";
-import "./Layout.css";
+import "../CSS/Layout.css";
 
 const Layout = (props) => {
   return (

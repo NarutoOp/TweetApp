@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import TweetBox from "./TweetBox";
 import Post from "./Post";
-import "./Feed.css";
+import "../CSS/Feed.css";
 import KeyStore from "../KeyStore";
 import axios from "axios";
 import FlipMove from "react-flip-move";

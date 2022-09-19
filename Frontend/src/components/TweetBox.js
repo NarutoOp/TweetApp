@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./TweetBox.css";
+import "../CSS/TweetBox.css";
 import { Button } from "@mui/material";
 import Avatar from "../Utility/BackgroundLetterAvatars";
 import KeyStore from "../KeyStore";

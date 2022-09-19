@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import Post from "./Post";
-import "./Feed.css";
+import "../CSS/Feed.css";
 import FlipMove from "react-flip-move";
 
 function TweetReplyFeed(props) {
