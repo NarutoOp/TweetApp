@@ -10,7 +10,7 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import "./Registration.css";
+import "../CSS/Registration.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import KeyStore from "../KeyStore";

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, IconButton, InputBase, Paper } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import UserCard from "././UserCard";
-import "./Feed.css";
+import "../CSS/Feed.css";
 import KeyStore from "../KeyStore";
 import axios from "axios";
 
