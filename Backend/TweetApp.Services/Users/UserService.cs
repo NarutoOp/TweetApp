@@ -36,22 +36,53 @@
         /// GetAllUsers method
         /// </summary>
         /// <returns>List of users</returns>
-        public List<User> GetAllUsers()
+        public List<UserResponse> GetAllUsers()
         {
-            return _userRepository.GetAllUser();
+            var responses = _userRepository.GetAllUser();
+            List<UserResponse> userResponse = new List<UserResponse>();
+
+            foreach (var response in responses)
+            {
+                userResponse.Add(
+                    new UserResponse
+                    {
+                        Id = response.Id,
+                        UserName = response.LoginId,
+                        FirstName = response.FirstName,
+                        LastName = response.LastName,
+                        Email = response.Email,
+                        ContactNumber = response.ContactNumber,
+                    });
+            }
+            return userResponse;
         }
 
         /// <summary>
         /// GetUserByUsername method
         /// </summary>
         /// <returns>List of users</returns>
-        public List<User> GetUserByUsername(string username)
+        public List<UserResponse> GetUserByUsername(string username)
         {
             if (string.IsNullOrEmpty(username))
             {
                 throw new DomainException("Username cannot be empty", System.Net.HttpStatusCode.BadRequest);
             }
-            return _userRepository.GetUserByUsername(username);
+            var responses = _userRepository.GetUserByUsername(username);
+            List<UserResponse> userResponse = new List<UserResponse>();
+            foreach(var response in responses)
+            {
+                userResponse.Add(
+                    new UserResponse
+                    {
+                        Id = response.Id,
+                        UserName = response.LoginId,
+                        FirstName = response.FirstName,
+                        LastName = response.LastName,
+                        Email = response.Email,
+                        ContactNumber = response.ContactNumber,
+                    });
+            }
+            return userResponse;
         }
 
         /// <summary>
@@ -69,7 +100,11 @@
             return new UserResponse
             {
                 Id = response.Id,
-                UserName = response.LoginId
+                UserName = response.LoginId,
+                FirstName = response.FirstName,
+                LastName = response.LastName,
+                Email = response.Email,
+                ContactNumber = response.ContactNumber,
             };
         }
 

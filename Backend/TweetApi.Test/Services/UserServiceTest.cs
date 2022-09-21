@@ -35,7 +35,12 @@
             _mockUserRepo.Setup(x => x.GetAllUser()).Returns(UserList);
             var ActualResult = _userService.GetAllUsers();
             Assert.IsNotNull(ActualResult);
-            Assert.That(UserList, Is.EqualTo(ActualResult));
+            Assert.AreEqual(UserList.FirstOrDefault().Id, ActualResult.FirstOrDefault().Id);
+            Assert.AreEqual(UserList.FirstOrDefault().FirstName, ActualResult.FirstOrDefault().FirstName);
+            Assert.AreEqual(UserList.FirstOrDefault().LastName, ActualResult.FirstOrDefault().LastName);
+            Assert.AreEqual(UserList.FirstOrDefault().Email, ActualResult.FirstOrDefault().Email);
+            Assert.AreEqual(UserList.FirstOrDefault().ContactNumber, ActualResult.FirstOrDefault().ContactNumber);
+            Assert.AreEqual(UserList.FirstOrDefault().LoginId, ActualResult.FirstOrDefault().UserName);
         }
 
         [Test]
@@ -47,7 +52,12 @@
             _mockUserRepo.Setup(x => x.GetUserByUsername(It.IsAny<string>())).Returns(UserList);
             var ActualResult = _userService.GetUserByUsername("test");
             Assert.IsNotNull(ActualResult);
-            Assert.That(UserList, Is.EqualTo(ActualResult));
+            Assert.AreEqual(UserList.FirstOrDefault().Id, ActualResult.FirstOrDefault().Id);
+            Assert.AreEqual(UserList.FirstOrDefault().FirstName, ActualResult.FirstOrDefault().FirstName);
+            Assert.AreEqual(UserList.FirstOrDefault().LastName, ActualResult.FirstOrDefault().LastName);
+            Assert.AreEqual(UserList.FirstOrDefault().Email, ActualResult.FirstOrDefault().Email);
+            Assert.AreEqual(UserList.FirstOrDefault().ContactNumber, ActualResult.FirstOrDefault().ContactNumber);
+            Assert.AreEqual(UserList.FirstOrDefault().LoginId, ActualResult.FirstOrDefault().UserName);
 
         }
 
