@@ -88,7 +88,7 @@ function Users() {
           <UserCard
             key={user.id}
             displayName={user.firstName + " " + user.lastName}
-            username={user.loginId}
+            username={user.userName}
             contact={user.contactNumber}
             email={user.email}
           />
