@@ -32,7 +32,7 @@
                 context.Response.ContentType = "application/json";
                 var json = JsonConvert.SerializeObject(info, settings);
                 await context.Response.WriteAsync(json);
-                _logger.LogError("Domain Exception ", json);
+                _logger.LogInformation("Domain Exception - {message}{errorMessage}{httpStatusCode}{source}{stackTrace}{targetSite}{status}", e.Message, e.ErrorMessage, (int)e.HttpStatusCode, e.Source, e.StackTrace, e.TargetSite, "fail");
             }
             catch (Exception e)
             {
@@ -41,7 +41,7 @@
                 context.Response.ContentType = "application/json";
                 var json = JsonConvert.SerializeObject(info, settings);
                 await context.Response.WriteAsync(json);
-                _logger.LogError("Exception ", json);
+                _logger.LogInformation("Exception - {message}{httpStatusCode}{source}{stackTrace}{targetSite}{status}", e.Message, 500, e.Source, e.StackTrace, e.TargetSite, "fail");
             };
         }
     }

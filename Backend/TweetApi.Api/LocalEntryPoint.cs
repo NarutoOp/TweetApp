@@ -1,27 +1,32 @@
-namespace TweetApi.Api;
-using Microsoft.Extensions.Logging;
-
-/// <summary>
-/// The Main function can be used to run the ASP.NET Core application locally using the Kestrel webserver.
-/// </summary>
-public class LocalEntryPoint
+namespace TweetApi.Api
 {
-    public static void Main(string[] args)
+    using AWS.Logger.SeriLog;
+    using Serilog;
+    using Serilog.Formatting.Compact;
+
+    /// <summary>
+    /// The Main function can be used to run the ASP.NET Core application locally using the Kestrel webserver.
+    /// </summary>
+    public class LocalEntryPoint
     {
-        CreateHostBuilder(args).Build().Run();
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .UseSerilog((ctx, lc) =>
+                {
+                    lc
+                        .ReadFrom.Configuration(ctx.Configuration)
+                        .WriteTo.AWSSeriLog(
+                            configuration: ctx.Configuration,
+                            textFormatter: new RenderedCompactJsonFormatter());
+                })
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
     }
-
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureLogging(logging =>
-            {
-                logging.AddAWSProvider();
-
-                // When you need logging below set the minimum level. Otherwise the logging framework will default to Informational for external providers.
-                logging.SetMinimumLevel(LogLevel.Debug);
-            })
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
 }
