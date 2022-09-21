@@ -2,6 +2,7 @@
 {
     using AutoFixture;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
     using Moq;
     using NUnit.Framework;
     using System.Net;
@@ -13,6 +14,7 @@
     public class UsersControllerTest
     {
         private Mock<IUserService> _mockUserService;
+        private Mock<ILogger<UsersController>> _mockLogger;
         private IFixture _fixture;
         private UsersController _userController;
 
@@ -21,14 +23,15 @@
         {
             _fixture = new Fixture();
             _mockUserService = new Mock<IUserService>();
-            _userController = new UsersController(_mockUserService.Object);
+            _mockLogger = new Mock<ILogger<UsersController>>();
+            _userController = new UsersController(_mockUserService.Object, _mockLogger.Object);
         }
 
         [Test]
         public void GetAllUser_ValidResponse()
         {
             var UserList = _fixture
-                            .CreateMany<User>(2)
+                            .CreateMany<UserResponse>(2)
                             .ToList();
             _mockUserService.Setup(x => x.GetAllUsers()).Returns(UserList);
             var ActualResult = _userController.GetAllUser();
@@ -40,7 +43,7 @@
         public void SearchUser_ValidResponse()
         {
             var UserList = _fixture
-                            .CreateMany<User>(2)
+                            .CreateMany<UserResponse>(2)
                             .ToList();
             _mockUserService.Setup(x => x.GetUserByUsername(It.IsAny<string>())).Returns(UserList);
             var ActualResult = _userController.SearchUser(It.IsAny<string>());

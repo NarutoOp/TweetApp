@@ -11,13 +11,13 @@
         /// GetAllUsers method
         /// </summary>
         /// <returns>List of users</returns>
-        List<User> GetAllUsers();
+        List<UserResponse> GetAllUsers();
 
         /// <summary>
         /// GetUserByUsername method
         /// </summary>
         /// <returns>List of users</returns>
-        List<User> GetUserByUsername(string username);
+        List<UserResponse> GetUserByUsername(string username);
 
         /// <summary>
         /// Add user into the database
