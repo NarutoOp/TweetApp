@@ -15,7 +15,6 @@ import Avatar from "../Utility/BackgroundLetterAvatars";
 
 const loginPages = ["Tweets", "Users"];
 const defaultPages = ["Login", "Registration"];
-const settings = ["Logout"];
 
 const Navbar = (props) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -144,13 +143,12 @@ const Navbar = (props) => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Button onClick={() => logout()} textAlign="center">
-                    {setting}
-                  </Button>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseUserMenu}>{user.fullName}</MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Button onClick={() => logout()} textAlign="center">
+                  Logout
+                </Button>
+              </MenuItem>
             </Menu>
           </Box>
         ) : null}
