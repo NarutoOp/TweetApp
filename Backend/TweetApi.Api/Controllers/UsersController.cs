@@ -12,6 +12,7 @@
     [ApiController]
     public class UsersController : ControllerBase
     {
+        private readonly ILogger<UsersController> _logger;
         /// <summary>
         /// IUserService instance
         /// </summary>
@@ -20,9 +21,10 @@
         /// <summary>
         /// UsersController constructor
         /// </summary>
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, ILogger<UsersController> logger)
         {
             _userService = userService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -35,6 +37,7 @@
         public ActionResult GetAllUser()
         {
             var result = _userService.GetAllUsers();
+            _logger.LogInformation("GetAllUser - {status} {httpStatusCode}", "success", "200");
             return Ok(result);
         }
 
@@ -48,6 +51,7 @@
         public ActionResult SearchUser(string username)
         {
             var result = _userService.GetUserByUsername(username);
+            _logger.LogInformation("SearchUser - {status} {httpStatusCode}", "success", "200");
             return Ok(result);
         }
 
@@ -65,6 +69,7 @@
                 throw new DomainException("Invalid Request", System.Net.HttpStatusCode.BadRequest);
             }
             var result = _userService.RegisterUser(user);
+            _logger.LogInformation("Register - {status} {httpStatusCode}", "success", "200");
             return Ok(result);
         }
         
@@ -81,7 +86,9 @@
             {
                 throw new DomainException("Invalid Request", System.Net.HttpStatusCode.BadRequest);
             }
-            return Ok(_userService.Login(userLogin));
+            var result = _userService.Login(userLogin);
+            _logger.LogInformation("Login - {status} {httpStatusCode}", "success", "200");
+            return Ok(result);
         }
 
         /// <summary>
@@ -99,6 +106,7 @@
                 UserName =  userName,
                 Password = password
             };
+            _logger.LogInformation("Forgot - {status} {httpStatusCode}", "success", "200");
             return Ok(_userService.UpdatePassword(userLogin));
         }
     }
