@@ -32,7 +32,11 @@
             _mockTweetRepo.Setup(x => x.GetTweetByUsername(It.IsAny<string>())).Returns(TweetList);
             var ActualResult = _tweetService.GetUserTweets("test");
             Assert.IsNotNull(ActualResult);
-            Assert.That(TweetList, Is.EqualTo(ActualResult));
+            Assert.AreEqual(TweetList.FirstOrDefault().Id, ActualResult.FirstOrDefault().Id);
+            Assert.AreEqual(TweetList.FirstOrDefault().TweetMessage.Name, ActualResult.FirstOrDefault().TweetMessage.Name);
+            Assert.AreEqual(TweetList.FirstOrDefault().TweetMessage.Username, ActualResult.FirstOrDefault().TweetMessage.Username);
+            Assert.AreEqual(TweetList.FirstOrDefault().TweetMessage.Message, ActualResult.FirstOrDefault().TweetMessage.Message);
+            Assert.AreEqual(TweetList.FirstOrDefault().TweetMessage.Created, ActualResult.FirstOrDefault().TweetMessage.Created);
         }
 
         [Test]
@@ -44,7 +48,11 @@
             _mockTweetRepo.Setup(x => x.GetAllTweets()).Returns(TweetList);
             var ActualResult = _tweetService.GetAllTweets();
             Assert.IsNotNull(ActualResult);
-            Assert.That(TweetList, Is.EqualTo(ActualResult));
+            Assert.AreEqual(TweetList.FirstOrDefault().Id, ActualResult.FirstOrDefault().Id);
+            Assert.AreEqual(TweetList.FirstOrDefault().TweetMessage.Name, ActualResult.FirstOrDefault().TweetMessage.Name);
+            Assert.AreEqual(TweetList.FirstOrDefault().TweetMessage.Username, ActualResult.FirstOrDefault().TweetMessage.Username);
+            Assert.AreEqual(TweetList.FirstOrDefault().TweetMessage.Message, ActualResult.FirstOrDefault().TweetMessage.Message);
+            Assert.AreEqual(TweetList.FirstOrDefault().TweetMessage.Created, ActualResult.FirstOrDefault().TweetMessage.Created);
         }
 
         [Test]
